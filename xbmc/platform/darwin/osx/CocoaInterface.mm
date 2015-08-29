@@ -49,17 +49,12 @@ static CVDisplayLinkRef displayLink = NULL;
 
 CGDirectDisplayID Cocoa_GetDisplayIDFromScreen(NSScreen *screen);
 
-NSOpenGLContext* Cocoa_GL_GetCurrentContext(void)
-{
-  return (NSOpenGLContext *)g_Windowing.GetNSOpenGLContext();
-}
-
 uint32_t Cocoa_GL_GetCurrentDisplayID(void)
 {
   // Find which display we are on from the current context (default to main display)
   CGDirectDisplayID display_id = kCGDirectMainDisplay;
   
-  NSOpenGLContext* context = Cocoa_GL_GetCurrentContext();
+  NSOpenGLContext* context = [NSOpenGLContext currentContext];
   if (context)
   {
     NSView* view;
@@ -357,15 +352,52 @@ and the window's frame is automatically saved for you in the application
 defaults each time its location changes. 
 */
 
+// calls for hiding and showing the cursor have to match each other
+// as of the cocoa reference. We ensure that and also ensure it is
+// called via mainthread here.
+@interface MouseCursorHelper : NSObject
++(void)HideMouseCursor;
++(void)ShowMouseCursor;
+@end
+
+static BOOL hidden = FALSE;
+
+@implementation MouseCursorHelper
+
++(void)HideMouseCursor
+{
+  if (!hidden)
+  {
+    //NSLog(@"Hide Cursor");
+    [NSCursor hide];
+    hidden = TRUE;
+  }
+}
+
++(void)ShowMouseCursor
+{
+  if (hidden)
+  {
+    //NSLog(@"Show Cursor");
+    [NSCursor unhide];
+    hidden = FALSE;
+  }
+}
+@end
 
 void Cocoa_HideMouse()
 {
-  [NSCursor hide];
+  [MouseCursorHelper performSelectorOnMainThread:@selector(HideMouseCursor) withObject:nil waitUntilDone:TRUE];
 }
 
 void Cocoa_ShowMouse()
 {
-  [NSCursor unhide];
+  [MouseCursorHelper performSelectorOnMainThread:@selector(ShowMouseCursor) withObject:nil waitUntilDone:TRUE];
+}
+
+bool Cocoa_IsMouseHidden()
+{
+  return hidden;
 }
 
 //---------------------------------------------------------------------------------
@@ -400,7 +432,51 @@ bool Cocoa_GPUForDisplayIsNvidiaPureVideo3()
   return(result);
 }
 
-const char *Cocoa_Paste()
+int Cocoa_GetOSVersion()
+{
+  static SInt32 version = -1;
+
+  if (version == -1)
+    Gestalt(gestaltSystemVersion, &version);
+  
+  return(version);
+}
+
+
+NSWindow* childWindow = nil;
+NSWindow* mainWindow = nil;
+
+
+void Cocoa_MakeChildWindow()
+{
+  NSOpenGLContext* context = [NSOpenGLContext currentContext];
+  NSView* view = [context view];
+  NSWindow* window = [view window];
+
+  // Create a child window.
+  childWindow = [[NSWindow alloc] initWithContentRect:[window frame]
+                                            styleMask:NSBorderlessWindowMask
+                                              backing:NSBackingStoreBuffered
+                                                defer:NO];
+                                          
+  [childWindow setContentSize:[view frame].size];
+  [childWindow setBackgroundColor:[NSColor blackColor]];
+  [window addChildWindow:childWindow ordered:NSWindowAbove];
+  mainWindow = window;
+  //childWindow.alphaValue = 0.5; 
+}
+
+void Cocoa_DestroyChildWindow()
+{
+  if (childWindow != nil)
+  {
+    [mainWindow removeChildWindow:childWindow];
+    [childWindow close];
+    childWindow = nil;
+  }
+}
+
+const char *Cocoa_Paste() 
 {
   NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
   NSString *type = [pasteboard availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]];

@@ -267,6 +267,19 @@ bool CDarwinUtils::DeviceHasLeakyVDA(void)
     hasLeakyVDA = NSAppKitVersionNumber <= NSAppKitVersionNumber10_9 ? 1 : 0;
 #endif
   return hasLeakyVDA == 1;
+
+// for sdk 10.6 we need to define something
+#if !defined(NSAppKitVersionNumber10_7)
+#define NSAppKitVersionNumber10_7 1138
+#endif
+// check if we can use the native fullscreen
+// methods which are available on 10.7 and later
+bool CDarwinUtils::DeviceHasNativeFullscreen(void)
+{
+  static int useNativeFullscreen = -1;
+  if (useNativeFullscreen == -1)
+    useNativeFullscreen = NSAppKitVersionNumber >= NSAppKitVersionNumber10_7 ? 1 : 0;
+  return useNativeFullscreen == 1;
 }
 
 const char *CDarwinUtils::GetOSReleaseString(void)
@@ -756,6 +769,23 @@ bool CDarwinUtils::CreateAliasShortcut(const std::string& fromPath, const std::s
   }
 #endif
   return ret;
+}
+
+bool DarwinIsMavericks()
+{
+  static int isMavericks = -1;
+
+#if defined(TARGET_DARWIN_OSX)
+  // there is no NSAppKitVersionNumber10_9 out there anywhere
+  // so we detect mavericks by one of these newly added app nap
+  // methods - and fix the ugly mouse rect problem which was hitting
+  // us when mavericks came out
+  if (isMavericks == -1)
+  {
+    isMavericks = [NSProcessInfo instancesRespondToSelector:@selector(beginActivityWithOptions:reason:)] == TRUE ? 1 : 0;
+  }
+#endif
+  return isMavericks == 1;
 }
 
 #endif

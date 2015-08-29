@@ -144,7 +144,7 @@ bool CRendererVDA::UploadTexture(int index)
 
     // It is the fastest way to render a CVPixelBuffer backed
     // with an IOSurface as there is no CPU -> GPU upload.
-    CGLContextObj cgl_ctx  = (CGLContextObj)g_Windowing.GetCGLContextObj();
+    CGLContextObj cgl_ctx  = g_Windowing.GetCGLContextObj();
     IOSurfaceRef	surface  = CVPixelBufferGetIOSurface(cvBufferRef);
     GLsizei       texWidth = IOSurfaceGetWidth(surface);
     GLsizei       texHeight= IOSurfaceGetHeight(surface);

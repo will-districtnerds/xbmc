@@ -38,7 +38,6 @@ else
 endif
 
 ifeq ($(OS),osx)
-  DEPENDS += libsdl
   EXCLUDED_DEPENDS = libusb
 endif
 

@@ -802,11 +802,8 @@ bool CApplication::CreateGUI()
 
 bool CApplication::InitWindow(RESOLUTION res)
 {
-  if (res == RES_INVALID)
-    res = CDisplaySettings::GetInstance().GetCurrentResolution();
-
-  bool bFullScreen = res != RES_WINDOW;
-  if (!g_Windowing.CreateNewWindow(CSysInfo::GetAppName(), bFullScreen, CDisplaySettings::GetInstance().GetResolutionInfo(res), OnEvent))
+  bool bFullScreen = CDisplaySettings::GetInstance().GetCurrentResolution() != RES_WINDOW;
+  if (!g_Windowing.CreateNewWindow(CSysInfo::GetAppName(), bFullScreen, CDisplaySettings::GetInstance().GetCurrentResolutionInfo(), OnEvent))
   {
     CLog::Log(LOGFATAL, "CApplication::Create: Unable to create window");
     return false;
@@ -4476,16 +4473,6 @@ void CApplication::Process()
 void CApplication::ProcessSlow()
 {
   g_powerManager.ProcessEvents();
-
-#if defined(TARGET_DARWIN_OSX)
-  // There is an issue on OS X that several system services ask the cursor to become visible
-  // during their startup routines.  Given that we can't control this, we hack it in by
-  // forcing the
-  if (g_Windowing.IsFullScreen())
-  { // SDL thinks it's hidden
-    Cocoa_HideMouse();
-  }
-#endif
 
   // Temporarely pause pausable jobs when viewing video/picture
   int currentWindow = g_windowManager.GetActiveWindow();

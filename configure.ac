@@ -603,6 +603,7 @@ case $host in
   *86*-apple-darwin*)
      CORE_SYSTEM_NAME=osx
      use_vtbdecoder=no
+     use_sdl=no
      ARCH="x86-osx"
      DEPENDS_ROOT_FOR_XCODE=$(echo ${prefix%/*})
      AC_SUBST([DEPENDS_ROOT_FOR_XCODE])
@@ -610,6 +611,7 @@ case $host in
   powerpc-apple-darwin*)
      CORE_SYSTEM_NAME=osx
      use_vtbdecoder=no
+     use_sdl=no
      ARCH="powerpc-osx"
      use_arch="ppc"
      DEPENDS_ROOT_FOR_XCODE=$(echo ${prefix%/*})
@@ -1147,13 +1149,7 @@ AC_SEARCH_LIBS([_dn_expand], resolv)
 AC_SEARCH_LIBS([__dn_expand],resolv)
 
 # platform dependent libraries
-if test "$host_vendor" = "apple" ; then
-  if test "$use_arch" != "arm"; then
-    AC_CHECK_LIB([SDL],      [main],, AC_MSG_ERROR($missing_library))
-    AC_DEFINE([HAVE_SDL],[1],["Define to 1 if using sdl"])
-    AC_DEFINE([HAVE_SDL_VERSION],[1],["SDL major version"])
-  fi
-else
+if test "$host_vendor" != "apple" ; then
 if test "x$use_alsa" != "xno"; then
   PKG_CHECK_MODULES([ALSA],  [alsa],
     [INCLUDES="$INCLUDES $ALSA_CFLAGS"; LIBS="$LIBS $ALSA_LIBS"; use_alsa=yes],
