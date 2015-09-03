@@ -553,7 +553,6 @@ bool CWinSystemOSX::CreateNewWindow(const std::string& name, bool fullScreen, RE
   NSPoint mouse = [NSEvent mouseLocation];
   if ([NSWindow windowNumberAtPoint:mouse belowWindowWithWindowNumber:0] == ((NSWindow *)m_appWindow).windowNumber)
   {
-    Cocoa_HideMouse();
     // warp XBMC cursor to our position
     NSPoint locationInWindowCoords = [(NSWindow *)m_appWindow mouseLocationOutsideOfEventStream];
     XBMC_Event newEvent;
@@ -828,7 +827,10 @@ bool CWinSystemOSX::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool bl
       [(NSWindow*)m_appWindow toggleFullScreen:nil];
     }
   }
-  
+
+  if (CDarwinUtils::DeviceHasNativeFullscreen())
+    ResizeWindow(m_nWidth, m_nHeight, -1, -1);
+
   return true;
 }
 
@@ -1018,6 +1020,8 @@ bool CWinSystemOSX::FlushBuffer(void)
 
 bool CWinSystemOSX::IsObscured(void)
 {
+  CCocoaAutoPool pool;
+
   if (m_bFullScreen && !CSettings::GetInstance().GetBool(CSettings::SETTING_VIDEOSCREEN_FAKEFULLSCREEN))
     return false;// in true fullscreen mode - we can't be obscured by anyone...
 
