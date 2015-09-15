@@ -32,7 +32,6 @@
   NSOpenGLPixelFormatAttribute wattrs[] =
   {
     NSOpenGLPFADoubleBuffer,
-    NSOpenGLPFAWindow,
     NSOpenGLPFANoRecovery,
     NSOpenGLPFAAccelerated,
     NSOpenGLPFAColorSize,           (NSOpenGLPixelFormatAttribute)32,
