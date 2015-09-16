@@ -507,20 +507,21 @@ bool CWinSystemOSX::CreateNewWindow(const std::string& name, bool fullScreen, RE
   m_bFullScreen = false;
   m_name        = name;
 
-  // for native fullscreen we always want to set the
-  // same windowed flags
+  NSDisableScreenUpdates();
+
+  // for native fullscreen we always want to set the same windowed flags
   NSUInteger windowStyleMask;
   if (fullScreen && !CDarwinUtils::DeviceHasNativeFullscreen())
     windowStyleMask = NSBorderlessWindowMask;
   else
     windowStyleMask = NSTitledWindowMask|NSResizableWindowMask|NSClosableWindowMask|NSMiniaturizableWindowMask;
-  
+
   if (m_appWindow == NULL || !CDarwinUtils::DeviceHasNativeFullscreen())
   {
     NSWindow *appWindow = [[OSXGLWindow alloc] initWithContentRect:NSMakeRect(0, 0, m_nWidth, m_nHeight) styleMask:windowStyleMask];
-    appWindow.backgroundColor = [NSColor blackColor];
     NSString *title = [NSString stringWithUTF8String:m_name.c_str()];
-    appWindow.title = title;
+    [(NSWindow*)m_appWindow setBackgroundColor:[NSColor blackColor]];
+    [(NSWindow*)m_appWindow setTitle:title];
     [appWindow setOneShot:NO];
 
     //if (!fullScreen)
@@ -547,10 +548,34 @@ bool CWinSystemOSX::CreateNewWindow(const std::string& name, bool fullScreen, RE
 
     m_appWindow = appWindow;
     m_bWindowCreated = true;
+    
+    // get screen refreshrate - this is needed
+    // when we startup in windowed mode and don't run through SetFullScreen
+    int dummy;
+    m_lastDisplayNr = resInfo.iScreen;
+    GetScreenResolution(&dummy, &dummy, &m_refreshRate, GetCurrentScreen());
+
   }
 
   [(NSWindow*)m_appWindow makeKeyWindow];
-  
+/*
+  [(NSWindow*)m_appWindow update];
+  [(NSWindow*)m_appWindow display];
+  [[NSApplication sharedApplication] setWindowsNeedUpdate:YES];
+  [[NSApplication sharedApplication] updateWindows];
+
+  if (windowStyleMask != NSBorderlessWindowMask)
+  {
+    // hack, hack , hack :)
+    NSRect frame = [(NSWindow*)m_appWindow frame];
+    frame.size.width += 1;
+    [(NSWindow*)m_appWindow setFrame:frame display:NO];
+    frame.size.width -= 1;
+    [(NSWindow*)m_appWindow setFrame:frame display:YES];
+  }
+*/
+  NSEnableScreenUpdates();
+
   // check if we have to hide the mouse after creating the window
   // in case we start windowed with the mouse over the window
   // the tracking area mouseenter, mouseexit are not called
@@ -577,19 +602,15 @@ bool CWinSystemOSX::DestroyWindowInternal()
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+  // set this 1st, we should really mutex protext m_appWindow in this class
+  m_bWindowCreated = false;
   if (m_appWindow)
   {
-    [(NSWindow *)m_appWindow setContentView:nil];
-    [(NSWindow *)m_appWindow release];
+    NSWindow *oldAppWindow = (NSWindow*)m_appWindow;
     m_appWindow = NULL;
+    [oldAppWindow setContentView:nil];
+    [oldAppWindow release];
   }
-
-  // get screen refreshrate - this is needed
-  // when we startup in windowed mode and don't run through SetFullScreen
-  int dummy;
-  m_lastDisplayNr = resInfo.iScreen;
-  GetScreenResolution(&dummy, &dummy, &m_refreshRate, GetCurrentScreen());
-  m_bWindowCreated = false;
 
   [pool release];
   
@@ -825,7 +846,7 @@ bool CWinSystemOSX::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool bl
   {
     m_fullscreenWillToggle = true;
     // toggle cocoa fullscreen mode
-    if ([(NSWindow *)m_appWindow respondsToSelector:@selector(toggleFullScreen:)])
+    if ([(NSWindow*)m_appWindow respondsToSelector:@selector(toggleFullScreen:)])
     {
       // does not seem to work, wonder why ?
       //[(NSWindow*)m_appWindow setAnimationBehavior:NSWindowAnimationBehaviorNone];
