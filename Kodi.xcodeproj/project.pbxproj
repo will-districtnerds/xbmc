@@ -880,6 +880,13 @@
 		DF4BF01D1A4EF3410053AC56 /* DVDDemuxCC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF4BF01B1A4EF3410053AC56 /* DVDDemuxCC.cpp */; };
 		DF4BF01E1A4EF3410053AC56 /* DVDDemuxCC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF4BF01B1A4EF3410053AC56 /* DVDDemuxCC.cpp */; };
 		DF52566D1732C1890094A464 /* DVDDemuxCDDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52566B1732C1890094A464 /* DVDDemuxCDDA.cpp */; };
+		DF52763C1BE93DE7002FE86D /* OSXGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276361BE93DE7002FE86D /* OSXGLView.mm */; };
+		DF52763D1BE93DE7002FE86D /* OSXGLWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */; };
+		DF52763E1BE93DE7002FE86D /* XBMCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */; };
+		DF5276411BE93DF8002FE86D /* DictionaryUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */; };
+		DF5276421BE93DF8002FE86D /* DictionaryUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */; };
+		DF5276441BE93F66002FE86D /* cocoa_monitor.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276431BE93F66002FE86D /* cocoa_monitor.mm */; };
+		DF5276451BE93F66002FE86D /* cocoa_monitor.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276431BE93F66002FE86D /* cocoa_monitor.mm */; };
 		DF5276E1151BAEDA00B5B63B /* Base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52769A151BAEDA00B5B63B /* Base64.cpp */; };
 		DF5276E2151BAEDA00B5B63B /* HttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52769C151BAEDA00B5B63B /* HttpResponse.cpp */; };
 		DF527734151BAF4C00B5B63B /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52772B151BAF4C00B5B63B /* WebSocket.cpp */; };
@@ -3759,6 +3766,16 @@
 		DF4BF01C1A4EF3410053AC56 /* DVDDemuxCC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDDemuxCC.h; sourceTree = "<group>"; };
 		DF52566B1732C1890094A464 /* DVDDemuxCDDA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDDemuxCDDA.cpp; sourceTree = "<group>"; };
 		DF52566C1732C1890094A464 /* DVDDemuxCDDA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDDemuxCDDA.h; sourceTree = "<group>"; };
+		DF5276351BE93DE7002FE86D /* OSXGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLView.h; sourceTree = "<group>"; };
+		DF5276361BE93DE7002FE86D /* OSXGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLView.mm; sourceTree = "<group>"; };
+		DF5276371BE93DE7002FE86D /* OSXGLWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLWindow.h; sourceTree = "<group>"; };
+		DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLWindow.mm; sourceTree = "<group>"; };
+		DF5276391BE93DE7002FE86D /* OSXGLWindow.mm.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OSXGLWindow.mm.orig; sourceTree = "<group>"; };
+		DF52763A1BE93DE7002FE86D /* XBMCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCApplication.h; sourceTree = "<group>"; };
+		DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XBMCApplication.mm; sourceTree = "<group>"; };
+		DF52763F1BE93DF8002FE86D /* DictionaryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryUtils.h; sourceTree = "<group>"; };
+		DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DictionaryUtils.mm; sourceTree = "<group>"; };
+		DF5276431BE93F66002FE86D /* cocoa_monitor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cocoa_monitor.mm; sourceTree = "<group>"; };
 		DF52769A151BAEDA00B5B63B /* Base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base64.cpp; sourceTree = "<group>"; };
 		DF52769B151BAEDA00B5B63B /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		DF52769C151BAEDA00B5B63B /* HttpResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpResponse.cpp; sourceTree = "<group>"; };
@@ -6143,6 +6160,8 @@
 				68AE5BDC1C92421800C4D527 /* PeripheralAddon.h */,
 				68AE5BDD1C92421800C4D527 /* PeripheralAddonTranslator.cpp */,
 				68AE5BDE1C92421800C4D527 /* PeripheralAddonTranslator.h */,
+				395938741AC310B00053A590 /* posix */,
+				552A226815F7E14B0015C0D0 /* main.cpp */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -7294,6 +7313,20 @@
 				DF4BF0141A4EF30F0053AC56 /* cc_decoder708.h */,
 			);
 			path = contrib;
+			sourceTree = "<group>";
+		};
+		DF5276341BE93DE7002FE86D /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				DF5276351BE93DE7002FE86D /* OSXGLView.h */,
+				DF5276361BE93DE7002FE86D /* OSXGLView.mm */,
+				DF5276371BE93DE7002FE86D /* OSXGLWindow.h */,
+				DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */,
+				DF5276391BE93DE7002FE86D /* OSXGLWindow.mm.orig */,
+				DF52763A1BE93DE7002FE86D /* XBMCApplication.h */,
+				DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */,
+			);
+			path = OSX;
 			sourceTree = "<group>";
 		};
 		DF527729151BAF4C00B5B63B /* websocket */ = {
@@ -9826,6 +9859,7 @@
 				395C29F61A98B44B00EBC7AD /* AddonModuleXbmcwsgi.cpp in Sources */,
 				E38E20B80D25F9FD00618676 /* GUIWindowMusicPlaylistEditor.cpp in Sources */,
 				DF91E9351C0A1C610011084D /* OSXTextInputResponder.mm in Sources */,
+				DF52763C1BE93DE7002FE86D /* OSXGLView.mm in Sources */,
 				E38E20BB0D25F9FD00618676 /* GUIDialogVideoOSD.cpp in Sources */,
 				DFC6F4B91AFF7CB10039A7FA /* kiss_fftr.c in Sources */,
 				E38E20BC0D25F9FD00618676 /* GUIWindowPictures.cpp in Sources */,
@@ -9920,6 +9954,7 @@
 				E38E22B30D25F9FE00618676 /* SectionLoader.cpp in Sources */,
 				E38E22B40D25F9FE00618676 /* VideoSettings.cpp in Sources */,
 				E38E22B80D25F9FE00618676 /* SlideShowPicture.cpp in Sources */,
+				DF5276441BE93F66002FE86D /* cocoa_monitor.mm in Sources */,
 				E38E22BA0D25F9FE00618676 /* Song.cpp in Sources */,
 				E38E22BF0D25F9FE00618676 /* ThumbLoader.cpp in Sources */,
 				E38E22C00D25F9FE00618676 /* ThumbnailCache.cpp in Sources */,
@@ -10139,6 +10174,7 @@
 				18B7C7C21294222E009E7A26 /* GUIFontTTF.cpp in Sources */,
 				18B7C7C31294222E009E7A26 /* GUIFontTTFDX.cpp in Sources */,
 				18B7C7C41294222E009E7A26 /* GUIFontTTFGL.cpp in Sources */,
+				DF52763D1BE93DE7002FE86D /* OSXGLWindow.mm in Sources */,
 				18B7C7C51294222E009E7A26 /* GUIImage.cpp in Sources */,
 				18B7C7C61294222E009E7A26 /* GUIIncludes.cpp in Sources */,
 				18B7C7C71294222E009E7A26 /* GUIInfoTypes.cpp in Sources */,
@@ -10326,6 +10362,7 @@
 				DF93D6AB1444A8B1007C6459 /* ShoutcastFile.cpp in Sources */,
 				DF93D6AD1444A8B1007C6459 /* SMBFile.cpp in Sources */,
 				DF93D6AE1444A8B1007C6459 /* SpecialProtocolFile.cpp in Sources */,
+				DF5276411BE93DF8002FE86D /* DictionaryUtils.mm in Sources */,
 				DF6A0D811A4584E80075BBFC /* OverrideDirectory.cpp in Sources */,
 				2AC7EB601C34893700BDAA95 /* PVRRecordingsPath.cpp in Sources */,
 				DF93D6B11444A8B1007C6459 /* UDFFile.cpp in Sources */,
@@ -10340,6 +10377,7 @@
 				F5ED908E15538E2300842059 /* POUtils.cpp in Sources */,
 				DFB65FB515373AE7006B8FF1 /* AEFactory.cpp in Sources */,
 				DFB65FB715373AE7006B8FF1 /* AEEncoderFFmpeg.cpp in Sources */,
+				DF52763E1BE93DE7002FE86D /* XBMCApplication.mm in Sources */,
 				DFB65FCC15373AE7006B8FF1 /* AEBitstreamPacker.cpp in Sources */,
 				DFB65FCD15373AE7006B8FF1 /* AEBuffer.cpp in Sources */,
 				DF29BCFD1B5D911800904347 /* GUIWindowEventLog.cpp in Sources */,
@@ -11059,6 +11097,7 @@
 				7C8E02231BA35D0B0072E8B2 /* Builtins.cpp in Sources */,
 				E49912AC174E5D9900741B6D /* SFTPDirectory.cpp in Sources */,
 				E49912AD174E5D9900741B6D /* SFTPFile.cpp in Sources */,
+				DF5276421BE93DF8002FE86D /* DictionaryUtils.mm in Sources */,
 				E49912AE174E5D9900741B6D /* ShoutcastFile.cpp in Sources */,
 				DF0E4AD51AD5986F00A75430 /* GUIDialogPVRRadioRDSInfo.cpp in Sources */,
 				395C29C21A98A0A000EBC7AD /* Webinterface.cpp in Sources */,
@@ -11081,6 +11120,7 @@
 				DF1D2DF11B6E85EE002BB9DB /* XbtFile.cpp in Sources */,
 				76AEFB3B1C8F79CE00EF2EC0 /* AddonGUIRenderingControl.cpp in Sources */,
 				E49912C2174E5DA000741B6D /* DirectoryNodeEpisodes.cpp in Sources */,
+				DF5276451BE93F66002FE86D /* cocoa_monitor.mm in Sources */,
 				E49912C3174E5DA000741B6D /* DirectoryNodeGrouped.cpp in Sources */,
 				E49912C4174E5DA000741B6D /* DirectoryNodeMoviesOverview.cpp in Sources */,
 				E49912C5174E5DA000741B6D /* DirectoryNodeMusicVideosOverview.cpp in Sources */,
