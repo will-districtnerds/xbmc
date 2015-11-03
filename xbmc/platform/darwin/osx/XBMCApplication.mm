@@ -18,7 +18,6 @@
  *
  */
 
-#define BOOL XBMC_BOOL
 #include "system.h"
 #include "Application.h"
 #include "AppParamParser.h"
@@ -36,7 +35,6 @@
 #include "XbmcContext.h"
 #include "windowing/WindowingFactory.h"
 #include "windowing/osx/WinEventsOSX.h"
-#undef BOOL
 
 #import <sys/param.h> /* for MAXPATHLEN */
 #import <unistd.h>
@@ -44,13 +42,9 @@
 #import "osx/CocoaInterface.h"
 #import "osx/DarwinUtils.h"
 
-//hack around problem with xbmc's typedef int BOOL
-// and obj-c's typedef unsigned char BOOL
-#define BOOL XBMC_BOOL 
-#import "PlatformDefs.h"
+#import "linux/PlatformDefs.h"
 #import "messaging/ApplicationMessenger.h"
 #import "storage/osx/DarwinStorageProvider.h"
-#undef BOOL
 
 #import "osx/DarwinUtils.h"
 #import "XBMCApplication.h"
@@ -69,14 +63,14 @@
 // Portions of CPS.h
 typedef struct CPSProcessSerNum
 {
-	UInt32		lo;
-	UInt32		hi;
+  UInt32		lo;
+  UInt32		hi;
 } CPSProcessSerNum;
 
 extern "C" {
-extern OSErr	CPSGetCurrentProcess(CPSProcessSerNum *psn);
-extern OSErr 	CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
-extern OSErr	CPSSetFrontProcess(CPSProcessSerNum *psn);
+  extern OSErr	CPSGetCurrentProcess(CPSProcessSerNum *psn);
+  extern OSErr CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
+  extern OSErr	CPSSetFrontProcess(CPSProcessSerNum *psn);
 }
 
 static int    gArgc;
@@ -196,9 +190,9 @@ static void setupWindowMenu(void)
     if (CFURLGetFileSystemRepresentation(url2, true, (UInt8 *)parentdir, MAXPATHLEN))
     {
       assert( chdir (parentdir) == 0 );   /* chdir to the binary app's parent */
-		}
-		CFRelease(url);
-		CFRelease(url2);
+    }
+    CFRelease(url);
+    CFRelease(url2);
   }
 }
 
@@ -447,7 +441,7 @@ int main(int argc, char *argv[])
     gArgc = argc;
     gArgv = (char **) malloc(sizeof (char *) * (argc+1));
     for (int i = 0; i <= argc; i++)
-        gArgv[i] = argv[i];
+      gArgv[i] = argv[i];
     gFinderLaunch = NO;
   }
   
