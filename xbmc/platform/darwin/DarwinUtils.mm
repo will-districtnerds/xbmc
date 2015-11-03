@@ -267,23 +267,6 @@ bool CDarwinUtils::DeviceHasLeakyVDA(void)
     hasLeakyVDA = NSAppKitVersionNumber <= NSAppKitVersionNumber10_9 ? 1 : 0;
 #endif
   return hasLeakyVDA == 1;
-
-// for sdk 10.6 we need to define something
-#if !defined(NSAppKitVersionNumber10_7)
-#define NSAppKitVersionNumber10_7 1138
-#endif
-// check if we can use the native fullscreen
-// methods which are available on 10.7 and later
-bool CDarwinUtils::DeviceHasNativeFullscreen(void)
-{
-  // damn animation effect is too slow when transitioning,
-  // so just turn this off for now.
-  return false;
-
-  static int useNativeFullscreen = -1;
-  if (useNativeFullscreen == -1)
-    useNativeFullscreen = NSAppKitVersionNumber >= NSAppKitVersionNumber10_7 ? 1 : 0;
-  return useNativeFullscreen == 1;
 }
 
 const char *CDarwinUtils::GetOSReleaseString(void)

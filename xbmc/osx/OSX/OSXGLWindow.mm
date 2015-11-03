@@ -157,8 +157,6 @@
 
 -(void)windowWillEnterFullScreen: (NSNotification*)pNotification
 {
-  if (!CDarwinUtils::DeviceHasNativeFullscreen())
-    return; // sanity
   
   // if osx is the issuer of the toggle
   // call XBMCs toggle function
@@ -181,9 +179,6 @@
 
 -(void)windowDidExitFullScreen: (NSNotification*)pNotification
 {
-  if (!CDarwinUtils::DeviceHasNativeFullscreen())
-    return; // sanity
-  
   // if osx is the issuer of the toggle
   // call XBMCs toggle function
   if (!g_Windowing.GetFullscreenWillToggle())
@@ -326,5 +321,10 @@
   // if it is hidden - mouse is belonging to us!
   if (Cocoa_IsMouseHidden())
     CWinEventsOSXImp::HandleInputEvent(theEvent);
+}
+
+- (BOOL) canBecomeKeyWindow
+{
+  return YES;
 }
 @end
