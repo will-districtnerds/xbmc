@@ -53,29 +53,16 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
 //------------------------------------------------------------------------------------------
-// special object-c class for handling the inhibit display NSTimer callback.
-@interface windowInhibitScreenSaverClass : NSObject
-- (void) updateSystemActivity: (NSTimer*)timer;
-@end
-
-@implementation windowInhibitScreenSaverClass
--(void) updateSystemActivity: (NSTimer*)timer
-{
-  UpdateSystemActivity(UsrActivity);
-}
-@end
-
-//------------------------------------------------------------------------------------------
 #define MAX_DISPLAYS 32
 
 //------------------------------------------------------------------------------------------
 CRect CGRectToCRect(CGRect cgrect)
 {
   CRect crect = CRect(
-    cgrect.origin.x,
-    cgrect.origin.y,
-    cgrect.origin.x + cgrect.size.width,
-    cgrect.origin.y + cgrect.size.height);
+                      cgrect.origin.x,
+                      cgrect.origin.y,
+                      cgrect.origin.x + cgrect.size.width,
+                      cgrect.origin.y + cgrect.size.height);
   return crect;
 }
 //---------------------------------------------------------------------------------
@@ -133,13 +120,13 @@ int GetDisplayIndex(CGDirectDisplayID display)
 {
   CGDirectDisplayID displayArray[MAX_DISPLAYS];
   CGDisplayCount    numDisplays;
-
+  
   // Get the list of displays.
   CGGetActiveDisplayList(MAX_DISPLAYS, displayArray, &numDisplays);
   while (numDisplays > 0)
   {
     if (display == displayArray[--numDisplays])
-	  return numDisplays;
+      return numDisplays;
   }
   return -1;
 }
@@ -230,7 +217,7 @@ CFDictionaryRef GetMode(int width, int height, double refreshrate, int screenIdx
 
 //---------------------------------------------------------------------------------
 static void DisplayReconfigured(CGDirectDisplayID display,
-  CGDisplayChangeSummaryFlags flags, void* userData)
+                                CGDisplayChangeSummaryFlags flags, void* userData)
 {
   CWinSystemOSX *winsys = (CWinSystemOSX*)userData;
   if (!winsys)
@@ -1049,26 +1036,41 @@ void CWinSystemOSX::OnMove(int x, int y)
   //printf("CWinSystemOSX::OnMove\n");
 }
 
+IOPMAssertionID systemSleepAssertionID = kIOPMNullAssertionID;
 void CWinSystemOSX::EnableSystemScreenSaver(bool bEnable)
 {
   //printf("CWinSystemOSX::EnableSystemScreenSaver\n");
   // see Technical Q&A QA1340
-  static IOPMAssertionID assertionID = 0;
-
-  if (!bEnable)
+  static IOPMAssertionID systemIdleAssertionID = kIOPMNullAssertionID;
+  static IOPMAssertionID systemSleepAssertionID = kIOPMNullAssertionID;
+  
+  if (bEnable)
   {
-    if (assertionID == 0)
+    if (systemIdleAssertionID != kIOPMNullAssertionID)
     {
-      CFStringRef reasonForActivity= CFSTR("XBMC requested disable system screen saver");
-      IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep,
-        kIOPMAssertionLevelOn, reasonForActivity, &assertionID);
+      IOPMAssertionRelease(systemIdleAssertionID);
+      systemIdleAssertionID = kIOPMNullAssertionID;
     }
-    UpdateSystemActivity(UsrActivity);
+    if (systemSleepAssertionID != kIOPMNullAssertionID)
+    {
+      IOPMAssertionRelease(systemSleepAssertionID);
+      systemSleepAssertionID = kIOPMNullAssertionID;
+    }
   }
-  else if (assertionID != 0)
+  else
   {
-    IOPMAssertionRelease(assertionID);
-    assertionID = 0;
+    if (systemIdleAssertionID == kIOPMNullAssertionID)
+    {
+      CFStringRef reasonForActivity= CFSTR("Kodi requested disable system idle sleep");
+      IOPMAssertionCreateWithName(kIOPMAssertionTypeNoIdleSleep,
+                                  kIOPMAssertionLevelOn, reasonForActivity, &systemIdleAssertionID);
+    }
+    if (systemSleepAssertionID == kIOPMNullAssertionID)
+    {
+      CFStringRef reasonForActivity= CFSTR("Kodi requested disable system screen saver");
+      IOPMAssertionCreateWithName(kIOPMAssertionTypeNoDisplaySleep,
+                                  kIOPMAssertionLevelOn, reasonForActivity, &systemSleepAssertionID);
+    }
   }
 
   m_use_system_screensaver = bEnable;
