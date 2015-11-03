@@ -195,7 +195,11 @@ typedef unsigned char   BYTE;
 typedef char        CHAR;
 typedef unsigned char UCHAR;
 typedef wchar_t     WCHAR;
+#if defined(TARGET_DARWIN_OSX)
+typedef signed char BOOL;
+#else
 typedef int         BOOL;
+#endif
 typedef BYTE        BOOLEAN;
 typedef short       SHORT;
 typedef unsigned short  USHORT;
