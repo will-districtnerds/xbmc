@@ -28,6 +28,9 @@ endif
 
 ifeq ($(OS),ios)
   EXCLUDED_DEPENDS = libcec libusb
+ifeq ($(CPU),arm64)
+  DEPENDS += boblight
+endif
 endif
 
 # TODO: Check use of libGLEW still needed with EGL
