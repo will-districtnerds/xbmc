@@ -3615,6 +3615,8 @@ void CApplication::OnPlayBackEnded()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackEnded();
+#elif defined(TARGET_DARWIN_IOS)
+  CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
   CVariant data(CVariant::VariantTypeObject);
@@ -3640,6 +3642,9 @@ void CApplication::OnPlayBackStarted()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackStarted();
+#elif defined(TARGET_DARWIN_IOS)
+  if (m_pPlayer->IsPlayingVideo())
+    CDarwinUtils::EnableOSScreenSaver(false);
 #endif
 
   CGUIMessage msg(GUI_MSG_PLAYBACK_STARTED, 0, 0);
@@ -3677,6 +3682,8 @@ void CApplication::OnPlayBackStopped()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackStopped();
+#elif defined(TARGET_DARWIN_IOS)
+  CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
   CVariant data(CVariant::VariantTypeObject);
@@ -3694,6 +3701,8 @@ void CApplication::OnPlayBackPaused()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackPaused();
+#elif defined(TARGET_DARWIN_IOS)
+  CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
   CVariant param;
@@ -3709,6 +3718,9 @@ void CApplication::OnPlayBackResumed()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackResumed();
+#elif defined(TARGET_DARWIN_IOS)
+  if (m_pPlayer->IsPlayingVideo())
+    CDarwinUtils::EnableOSScreenSaver(false);
 #endif
 
   CVariant param;
