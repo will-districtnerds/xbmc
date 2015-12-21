@@ -210,7 +210,6 @@ void CAdvancedSettings::Initialize()
   m_moviesExcludeFromScanRegExps.insert(m_moviesExcludeFromScanRegExps.end(),
                                         m_allExcludeFromScanRegExps.begin(),
                                         m_allExcludeFromScanRegExps.end());
-
   
   m_tvshowExcludeFromScanRegExps.clear();
   m_tvshowExcludeFromScanRegExps.push_back("[!-._ \\\\/]sample[-._ \\\\/]");
@@ -223,6 +222,11 @@ void CAdvancedSettings::Initialize()
   m_audioExcludeFromScanRegExps.insert(m_audioExcludeFromScanRegExps.end(),
                                         m_allExcludeFromScanRegExps.begin(),
                                         m_allExcludeFromScanRegExps.end());
+
+  m_audioExcludeFromScanRegExps.clear();
+  m_audioExcludeFromScanRegExps.push_back("[\\/]\\.\\_");
+  m_audioExcludeFromScanRegExps.push_back("\\.DS_Store");
+  m_audioExcludeFromScanRegExps.push_back("\\.AppleDouble");
 
   m_folderStackRegExps.clear();
   m_folderStackRegExps.push_back("((cd|dvd|dis[ck])[0-9]+)$");
