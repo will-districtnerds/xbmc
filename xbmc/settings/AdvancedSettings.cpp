@@ -301,7 +301,11 @@ void CAdvancedSettings::Initialize()
   m_curlDisableIPV6 = false;      //Certain hardware/OS combinations have trouble
                                   //with ipv6.
 
+#if defined(TARGET_DARWIN_IOS)
+  m_startFullScreen = true;
+#else
   m_startFullScreen = false;
+#endif
   m_showExitButton = true;
   m_splashImage = true;
 
@@ -349,7 +353,11 @@ void CAdvancedSettings::Initialize()
 
   m_enableMultimediaKeys = false;
 
+#if defined(TARGET_DARWIN_IOS)
+  m_canWindowed = false;
+#else
   m_canWindowed = true;
+#endif
   m_guiVisualizeDirtyRegions = false;
   m_guiAlgorithmDirtyRegions = 3;
   m_guiDirtyRegionNoFlipTimeout = 0;
@@ -380,13 +388,7 @@ void CAdvancedSettings::Initialize()
   m_extraLogLevels = 0;
 
   #if defined(TARGET_DARWIN)
-    std::string logDir = getenv("HOME");
-    #if defined(TARGET_DARWIN_OSX)
-    logDir += "/Library/Logs/";
-    #else // ios
-    logDir += "/" + std::string(CDarwinUtils::GetAppRootFolder()) + "/";
-    #endif
-    m_logFolder = logDir;
+    m_logFolder = "special://logs";
   #else
     m_logFolder = "special://home/";              // log file location
   #endif
