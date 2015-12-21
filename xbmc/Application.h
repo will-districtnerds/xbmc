@@ -493,7 +493,7 @@ protected:
   float NavigationIdleTime();
 
   bool InitDirectoriesLinux();
-  bool InitDirectoriesOSX();
+  bool InitDirectoriesDarwin();
   bool InitDirectoriesWin32();
   void CreateUserDirs() const;
 
