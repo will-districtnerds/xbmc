@@ -3704,6 +3704,9 @@ void CApplication::OnPlayBackResumed()
   CXBMCApp::OnPlayBackResumed();
   if (!m_pPlayer->IsPlayingAudio())
     CDarwinUtils::EnableOSScreenSaver(false);
+#elif defined(TARGET_DARWIN_TVOS)
+  if (!m_pPlayer->IsPlayingAudio())
+    CDarwinUtils::EnableOSScreenSaver(false);
 #endif
 
   CVariant param;
