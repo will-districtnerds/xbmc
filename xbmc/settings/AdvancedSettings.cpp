@@ -333,7 +333,11 @@ void CAdvancedSettings::Initialize()
   m_startFullScreen = false;
 #endif
   m_showExitButton = true;
+#if defined(TARGET_DARWIN_TVOS)
+  m_splashImage = false;
+#else
   m_splashImage = true;
+#endif
 
   m_playlistRetries = 100;
   m_playlistTimeout = 20; // 20 seconds timeout
@@ -414,13 +418,7 @@ void CAdvancedSettings::Initialize()
   m_extraLogLevels = 0;
 
   #if defined(TARGET_DARWIN)
-    std::string logDir = getenv("HOME");
-    #if defined(TARGET_DARWIN_OSX)
-      logDir += "/Library/Logs/";
-    #else // ios
-      logDir += "/" + std::string(CDarwinUtils::GetAppRootFolder()) + "/";
-    #endif
-    m_logFolder = logDir;
+    m_logFolder = "special://logpath";
   #else
     m_logFolder = "special://home/";              // log file location
   #endif
