@@ -160,6 +160,9 @@ bool CWinSystemIOS::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool bl
 
 UIScreenMode *getModeForResolution(int width, int height, unsigned int screenIdx)
 {
+#if defined(__TVOS_9_1)
+  return NULL; // API is prohibited as of TVOS SDK 9.1
+#else
   if( screenIdx >= [[UIScreen screens] count])
     return NULL;
     
@@ -177,6 +180,7 @@ UIScreenMode *getModeForResolution(int width, int height, unsigned int screenIdx
   }
   CLog::Log(LOGERROR,"No matching mode found!");
   return NULL;
+#endif
 }
 
 bool CWinSystemIOS::SwitchToVideoMode(int width, int height, double refreshrate, int screenIdx)
@@ -228,12 +232,14 @@ bool CWinSystemIOS::GetScreenResolution(int* w, int* h, double* fps, int screenI
   *fps = 0.0;
   //if current mode is 0x0 (happens with external screens which arn't active)
   //then use the preferred mode
+#if !defined(__TVOS_9_1) // preferredMode is prohibited in tvos sdk 9.1 and later
   if(*h == 0 || *w ==0)
   {
     UIScreenMode *firstMode = [screen preferredMode];
     *w = firstMode.size.width;
     *h = firstMode.size.height;
   }
+#endif
   
   //for mainscreen use the eagl bounds
   //because mainscreen is build in
@@ -281,6 +287,7 @@ void CWinSystemIOS::UpdateResolutions()
 
 void CWinSystemIOS::FillInVideoModes()
 {
+#if !defined(__TVOS_9_1)
   // Add full screen settings for additional monitors
   int numDisplays = GetNumScreens();
 
@@ -318,6 +325,7 @@ void CWinSystemIOS::FillInVideoModes()
       CDisplaySettings::GetInstance().AddResolutionInfo(res);
     }
   }
+#endif
 }
 
 bool CWinSystemIOS::IsExtSupported(const char* extension)
