@@ -71,7 +71,7 @@ public:
   //static void CALLBACK AppFinished(void* closure, BOOLEAN TimerOrWaitFired);
 #elif defined(TARGET_ANDROID)
   BOOL ExecuteAppAndroid(const char* strSwitches,const char* strPath);
-#elif defined(TARGET_POSIX)
+#elif defined(TARGET_POSIX) && !defined(TARGET_DARWIN_IOS)
   BOOL ExecuteAppLinux(const char* strSwitches);
 #endif
 
