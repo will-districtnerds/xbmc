@@ -3535,7 +3535,7 @@ void CApplication::OnPlayBackEnded()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackEnded();
-#elif defined(TARGET_DARWIN_IOS)
+#elif defined(TARGET_DARWIN_TVOS)
   CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
@@ -3562,8 +3562,8 @@ void CApplication::OnPlayBackStarted()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackStarted();
-#elif defined(TARGET_DARWIN_IOS)
-  if (m_pPlayer->IsPlayingVideo())
+#elif defined(TARGET_DARWIN_TVOS)
+  if (!m_pPlayer->IsPlayingAudio())
     CDarwinUtils::EnableOSScreenSaver(false);
 #endif
 
@@ -3602,7 +3602,7 @@ void CApplication::OnPlayBackStopped()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackStopped();
-#elif defined(TARGET_DARWIN_IOS)
+#elif defined(TARGET_DARWIN_TVOS)
   CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
@@ -3621,7 +3621,7 @@ void CApplication::OnPlayBackPaused()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackPaused();
-#elif defined(TARGET_DARWIN_IOS)
+#elif defined(TARGET_DARWIN_TVOS)
   CDarwinUtils::EnableOSScreenSaver(true);
 #endif
 
@@ -3638,8 +3638,7 @@ void CApplication::OnPlayBackResumed()
 #endif
 #ifdef TARGET_ANDROID
   CXBMCApp::OnPlayBackResumed();
-#elif defined(TARGET_DARWIN_IOS)
-  if (m_pPlayer->IsPlayingVideo())
+  if (!m_pPlayer->IsPlayingAudio())
     CDarwinUtils::EnableOSScreenSaver(false);
 #endif
 
@@ -3904,6 +3903,10 @@ bool CApplication::WakeUpScreenSaverAndDPMS(bool bPowerOffKeyPressed /* = false 
   else
     result = WakeUpScreenSaver(bPowerOffKeyPressed);
 
+#if defined(TARGET_DARWIN_TVOS)
+  result = CDarwinUtils::ResetSystemIdleTimer();
+#endif
+
   if(result)
   {
     // allow listeners to ignore the deactivation if it preceeds a powerdown/suspend etc
@@ -3915,7 +3918,6 @@ bool CApplication::WakeUpScreenSaverAndDPMS(bool bPowerOffKeyPressed /* = false 
     CXBMCApp::EnableWakeLock(true);
 #endif
   }
-
   return result;
 }
 
