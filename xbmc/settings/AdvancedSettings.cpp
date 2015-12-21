@@ -417,12 +417,6 @@ void CAdvancedSettings::Initialize()
   m_extraLogEnabled = false;
   m_extraLogLevels = 0;
 
-  #if defined(TARGET_DARWIN)
-    m_logFolder = "special://logpath";
-  #else
-    m_logFolder = "special://home/";              // log file location
-  #endif
-
   m_userAgent = g_sysinfo.GetUserAgent();
 
   m_initialized = true;
@@ -1172,7 +1166,6 @@ void CAdvancedSettings::Clear()
   m_videoExtensions.clear();
   m_discStubExtensions.clear();
 
-  m_logFolder.clear();
   m_userAgent.clear();
 }
 
