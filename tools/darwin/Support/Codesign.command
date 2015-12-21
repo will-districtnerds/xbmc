@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #this is the list of binaries we have to sign for being able to run un-jailbroken
-LIST_BINARY_EXTENSIONS="dylib so 0 vis pvr"
+LIST_BINARY_EXTENSIONS="dylib so"
 
 export CODESIGN_ALLOCATE=`xcodebuild -find codesign_allocate`
 
@@ -14,7 +14,7 @@ if [ ! -f ${GEN_ENTITLEMENTS} ]; then
 fi
 
 
-if [ "${PLATFORM_NAME}" == "iphoneos" ]; then
+if [ "${PLATFORM_NAME}" == "iphoneos" ] || [ "${PLATFORM_NAME}" == "appletvos" ]; then
   if [ -f "/Users/Shared/buildslave/keychain_unlock.sh" ]; then
     /Users/Shared/buildslave/keychain_unlock.sh
   fi
@@ -24,7 +24,11 @@ if [ "${PLATFORM_NAME}" == "iphoneos" ]; then
     ${LDID} -S ${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${APP_NAME}
   fi
 
-  ${GEN_ENTITLEMENTS} "org.xbmc.kodi-ios" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent";
+  # pull the CFBundleIdentifier out of the built xxx.app
+  BUNDLEID=`mdls -raw -name kMDItemCFBundleIdentifier ${CODESIGNING_FOLDER_PATH}`
+  echo "CFBundleIdentifier is ${BUNDLEID}"
+
+  ${GEN_ENTITLEMENTS} "${BUNDLEID}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent";
   codesign -v -f -s "iPhone Developer" --entitlements "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/"
   
   #if user has set a code_sign_identity different from iPhone Developer we do a real codesign (for deployment on non-jailbroken devices)
@@ -32,8 +36,20 @@ if [ "${PLATFORM_NAME}" == "iphoneos" ]; then
     echo Doing a full bundle sign using genuine identity "${CODE_SIGN_IDENTITY}"
     for binext in $LIST_BINARY_EXTENSIONS
     do
-      codesign -fvvv -s "${CODE_SIGN_IDENTITY}" -i org.xbmc.kodi-ios `find ${CODESIGNING_FOLDER_PATH} -name "*.$binext" -type f` ${CODESIGNING_FOLDER_PATH}
+      codesign --deep -fvvv -s "${CODE_SIGN_IDENTITY}" -i "${BUNDLEID}" `find ${CODESIGNING_FOLDER_PATH} -name "*.$binext" -type f` ${CODESIGNING_FOLDER_PATH}
     done
     echo In case your app crashes with SIG_SIGN check the variable LIST_BINARY_EXTENSIONS in tools/darwin/Support/Codesign.command
+
+    #repackage python eggs
+    EGGS=`find ${CODESIGNING_FOLDER_PATH} -name "*.egg" -type f`
+    for i in $EGGS; do
+      echo $i
+      mkdir del
+      unzip $i -d del
+      codesign --deep -fvvv -s "${CODE_SIGN_IDENTITY}" -i "${BUNDLEID}" `find ./del/ -name "*.$binext" -type f` ./del/
+      rm $i
+      cd del && zip -r $i ./* &&  cd ..
+      rm -r ./del/
+    done
   fi
 fi
