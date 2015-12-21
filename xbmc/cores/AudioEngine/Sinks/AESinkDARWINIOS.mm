@@ -33,6 +33,7 @@
 
 #include <sstream>
 #include <AudioToolbox/AudioToolbox.h>
+#import  <AVFoundation/AVFoundation.h>
 
 #define CA_MAX_CHANNELS 8
 static enum AEChannel CAChannelMap[CA_MAX_CHANNELS + 1] = {
@@ -91,10 +92,8 @@ class CAAudioUnitSink
    ~CAAudioUnitSink();
 
     bool         open(AudioStreamBasicDescription outputFormat);
+    bool         activate();
     bool         close();
-    bool         play(bool mute);
-    bool         mute(bool mute);
-    bool         pause();
     void         drain();
     void         getDelay(AEDelayStatus& status);
     double       cacheSize();
@@ -114,9 +113,10 @@ class CAAudioUnitSink
     void         deactivateAudioSession();
  
     // callbacks
+#if !defined(TARGET_DARWIN_TVOS)
     static void sessionPropertyCallback(void *inClientData,
                   AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData);
-
+#endif
     static OSStatus renderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags,
                   const AudioTimeStamp *inTimeStamp, UInt32 inOutputBusNumber, UInt32 inNumberFrames,
                   AudioBufferList *ioData);
@@ -127,7 +127,6 @@ class CAAudioUnitSink
     AudioStreamBasicDescription m_outputFormat;
     AERingBuffer       *m_buffer;
 
-    bool                m_mute;
     Float32             m_outputVolume;
     Float32             m_outputLatency;
     Float32             m_bufferDuration;
@@ -136,8 +135,6 @@ class CAAudioUnitSink
     unsigned int        m_frameSize;
     unsigned int        m_frames;
 
-    bool                m_playing;
-    bool                m_playing_saved;
     volatile bool       m_started;
 
     CAESpinSection      m_render_section;
@@ -147,23 +144,35 @@ class CAAudioUnitSink
 
 CAAudioUnitSink::CAAudioUnitSink()
 : m_activated(false)
-, m_buffer(NULL)
-, m_playing(false)
-, m_playing_saved(false)
+, m_buffer(nullptr)
 , m_started(false)
 , m_render_timestamp(0)
 , m_render_frames(0)
 {
+  NSError *err = nullptr;
+  if (![[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&err])
+  {
+    CLog::Log(LOGERROR, "AVAudioSession setCategory failed: %ld", (long)err.code);
+  }
+  err = nil;
+  if (![[AVAudioSession sharedInstance] setActive: YES error: &err])
+  {
+    CLog::Log(LOGERROR, "AVAudioSession setActive YES failed: %ld", (long)err.code);
+  }
 }
 
 CAAudioUnitSink::~CAAudioUnitSink()
 {
   close();
+  NSError *err = nullptr;
+  if (![[AVAudioSession sharedInstance] setActive: NO error: &err])
+  {
+    CLog::Log(LOGERROR, "AVAudioSession setActive NO failed: %ld", (long)err.code);
+  }
 }
 
 bool CAAudioUnitSink::open(AudioStreamBasicDescription outputFormat)
 {
-  m_mute          = false;
   m_setup         = false;
   m_outputFormat  = outputFormat;
   m_outputLatency = 0.0;
@@ -183,41 +192,15 @@ bool CAAudioUnitSink::open(AudioStreamBasicDescription outputFormat)
 bool CAAudioUnitSink::close()
 {
   deactivateAudioSession();
-  
-  delete m_buffer;
-  m_buffer = NULL;
-
+  SAFE_DELETE(m_buffer);
   m_started = false;
+
   return true;
 }
 
-bool CAAudioUnitSink::play(bool mute)
-{    
-  if (!m_playing)
-  {
-    if (activateAudioSession())
-    {
-      CAAudioUnitSink::mute(mute);
-      m_playing = !AudioOutputUnitStart(m_audioUnit);
-    }
-  }
-
-  return m_playing;
-}
-
-bool CAAudioUnitSink::mute(bool mute)
+bool CAAudioUnitSink::activate()
 {
-  m_mute = mute;
-
-  return true;
-}
-
-bool CAAudioUnitSink::pause()
-{	
-  if (m_playing)
-    m_playing = AudioOutputUnitStop(m_audioUnit);
-
-  return m_playing;
+  return activateAudioSession();
 }
 
 void CAAudioUnitSink::getDelay(AEDelayStatus& status)
@@ -292,16 +275,16 @@ void CAAudioUnitSink::drain()
 
 void CAAudioUnitSink::setCoreAudioBuffersize()
 {
-#if !TARGET_IPHONE_SIMULATOR
-  // set the buffer size, this affects the number of samples
+  // set the buffer size (in seconds), this affects the number of samples
   // that get rendered every time the audio callback is fired.
   Float32 preferredBufferSize = 512 * m_outputFormat.mChannelsPerFrame / m_outputFormat.mSampleRate;
   CLog::Log(LOGNOTICE, "%s setting buffer duration to %f", __PRETTY_FUNCTION__, preferredBufferSize);
-  OSStatus status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration,
-                                   sizeof(preferredBufferSize), &preferredBufferSize);
-  if (status != noErr)
-    CLog::Log(LOGWARNING, "%s preferredBufferSize couldn't be set (error: %d)", __PRETTY_FUNCTION__, (int)status);
-#endif
+
+  NSError *audioSessionError = nullptr;
+  AVAudioSession *mySession = [AVAudioSession sharedInstance];
+  [mySession setPreferredIOBufferDuration: (NSTimeInterval)preferredBufferSize error: &audioSessionError];
+  if (audioSessionError != nullptr)
+    CLog::Log(LOGWARNING, "%s preferredBufferSize couldn't be set", __PRETTY_FUNCTION__);
 }
 
 bool CAAudioUnitSink::setCoreAudioInputFormat()
@@ -322,20 +305,16 @@ void CAAudioUnitSink::setCoreAudioPreferredSampleRate()
 {
   Float64 preferredSampleRate = m_outputFormat.mSampleRate;
   CLog::Log(LOGNOTICE, "%s requesting hw samplerate %f", __PRETTY_FUNCTION__, preferredSampleRate);
-  OSStatus status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareSampleRate,
-                                   sizeof(preferredSampleRate), &preferredSampleRate);
-  if (status != noErr)
-    CLog::Log(LOGWARNING, "%s preferredSampleRate couldn't be set (error: %d)", __PRETTY_FUNCTION__, (int)status);
+
+  NSError *audioSessionError = nil;
+  AVAudioSession *mySession = [AVAudioSession sharedInstance];
+  [mySession setPreferredSampleRate: preferredSampleRate error: &audioSessionError];
+  preferredSampleRate = [mySession sampleRate];
 }
 
 Float64 CAAudioUnitSink::getCoreAudioRealisedSampleRate()
 {
-  Float64 outputSampleRate = 0.0;
-  UInt32 ioDataSize = sizeof(outputSampleRate);
-  if (AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareSampleRate,
-                              &ioDataSize, &outputSampleRate) != noErr)
-    CLog::Log(LOGERROR, "%s: error getting CurrentHardwareSampleRate", __FUNCTION__);
-  return outputSampleRate;
+  return [[AVAudioSession sharedInstance] sampleRate];
 }
 
 bool CAAudioUnitSink::setupAudio()
@@ -344,12 +323,13 @@ bool CAAudioUnitSink::setupAudio()
   if (m_setup && m_audioUnit)
     return true;
 
+#if 0
   AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange,
     sessionPropertyCallback, this);
 
   AudioSessionAddPropertyListener(kAudioSessionProperty_CurrentHardwareOutputVolume,
     sessionPropertyCallback, this);
- 
+#endif
   // Audio Unit Setup
   // Describe a default output unit.
   AudioComponentDescription description = {};
@@ -418,11 +398,12 @@ bool CAAudioUnitSink::setupAudio()
 bool CAAudioUnitSink::checkAudioRoute()
 {
   // why do we need to know the audio route ?
+#if 0
   CFStringRef route;
   UInt32 propertySize = sizeof(CFStringRef);
   if (AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &propertySize, &route) != noErr)
     return false;
-
+#endif
   return true;
 }
 
@@ -430,23 +411,11 @@ bool CAAudioUnitSink::checkSessionProperties()
 {
   checkAudioRoute();
 
-  UInt32 ioDataSize;
-  ioDataSize = sizeof(m_outputVolume);
-  if (AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareOutputVolume,
-    &ioDataSize, &m_outputVolume) != noErr)
-    CLog::Log(LOGERROR, "%s: error getting CurrentHardwareOutputVolume", __FUNCTION__);
+  AVAudioSession *mySession = [AVAudioSession sharedInstance];
+  m_outputVolume   = [mySession outputVolume];
+  m_outputLatency  = [mySession outputLatency];
+  m_bufferDuration = [mySession IOBufferDuration];
 
-  ioDataSize = sizeof(m_outputLatency);
-  if (AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareOutputLatency,
-    &ioDataSize, &m_outputLatency) != noErr)
-    CLog::Log(LOGERROR, "%s: error getting CurrentHardwareOutputLatency", __FUNCTION__);
-
-  ioDataSize = sizeof(m_bufferDuration);
-  if (AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareIOBufferDuration,
-    &ioDataSize, &m_bufferDuration) != noErr)
-    CLog::Log(LOGERROR, "%s: error getting CurrentHardwareIOBufferDuration", __FUNCTION__);
-   
-  CLog::Log(LOGDEBUG, "%s: volume = %f, latency = %f, buffer = %f", __FUNCTION__, m_outputVolume, m_outputLatency, m_bufferDuration);
   return true;
 }
 
@@ -455,7 +424,10 @@ bool CAAudioUnitSink::activateAudioSession()
   if (!m_activated)
   {
     if (checkAudioRoute() && setupAudio())
+    {
+      AudioOutputUnitStart(m_audioUnit);
       m_activated = true;
+    }
   }
 
   return m_activated;
@@ -465,19 +437,32 @@ void CAAudioUnitSink::deactivateAudioSession()
 {
   if (m_activated)
   {
-    pause();
+    AudioUnitReset(m_audioUnit, kAudioUnitScope_Global, 0);
+
+    // this is a delayed call, the OS will block here
+    // until the autio unit actually is stopped.
+    AudioOutputUnitStop(m_audioUnit);
+
+    // detach the render callback on the unit
+    AURenderCallbackStruct callbackStruct = {0};
+    AudioUnitSetProperty(m_audioUnit,
+      kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input,
+      0, &callbackStruct, sizeof(callbackStruct));
+
     AudioUnitUninitialize(m_audioUnit);
-    AudioComponentInstanceDispose(m_audioUnit), m_audioUnit = NULL;
+    AudioComponentInstanceDispose(m_audioUnit), m_audioUnit = nullptr;
+#if 0
     AudioSessionRemovePropertyListenerWithUserData(kAudioSessionProperty_AudioRouteChange,
       sessionPropertyCallback, this);
     AudioSessionRemovePropertyListenerWithUserData(kAudioSessionProperty_CurrentHardwareOutputVolume,
       sessionPropertyCallback, this);
-
+#endif
     m_setup = false;
     m_activated = false;
   }
 }
 
+#if 0
 void CAAudioUnitSink::sessionPropertyCallback(void *inClientData,
   AudioSessionPropertyID inID, UInt32 inDataSize, const void *inData)
 {
@@ -494,6 +479,7 @@ void CAAudioUnitSink::sessionPropertyCallback(void *inClientData,
       sink->m_outputVolume = *(float*)inData;
   }
 }
+#endif
 
 inline void LogLevel(unsigned int got, unsigned int wanted)
 {
@@ -524,10 +510,16 @@ OSStatus CAAudioUnitSink::renderCallback(void *inRefCon, AudioUnitRenderActionFl
     unsigned int wanted = ioData->mBuffers[i].mDataByteSize;
     unsigned int bytes = std::min(sink->m_buffer->GetReadSize(), wanted);
     sink->m_buffer->Read((unsigned char*)ioData->mBuffers[i].mData, bytes);
-    LogLevel(bytes, wanted);
+    //LogLevel(bytes, wanted);
     
     if (bytes == 0)
+    {
+      // Apple iOS docs say kAudioUnitRenderAction_OutputIsSilence provides a hint to
+      // the audio unit that there is no audio to process. and you must also explicitly
+      // set the buffers contents pointed at by the ioData parameter to 0.
+      memset(ioData->mBuffers[i].mData, 0, ioData->mBuffers[i].mDataByteSize);
       *ioActionFlags |= kAudioUnitRenderAction_OutputIsSilence;
+    }
   }
 
   sink->m_render_timestamp = inTimeStamp->mHostTime;
@@ -550,7 +542,11 @@ static void EnumerateDevices(AEDeviceInfoList &list)
   device.m_displayNameExtra = "";
   // TODO screen changing on ios needs to call
   // devices changed once this is available in activae
+#if defined(TARGET_DARWIN_TVOS)
+  if (1)
+#else
   if (g_Windowing.GetCurrentScreen() > 0)
+#endif
   {
     device.m_deviceType = AE_DEVTYPE_IEC958; //allow passthrough for tvout
     device.m_streamTypes.push_back(CAEStreamInfo::STREAM_TYPE_AC3);
@@ -559,6 +555,9 @@ static void EnumerateDevices(AEDeviceInfoList &list)
     device.m_streamTypes.push_back(CAEStreamInfo::STREAM_TYPE_DTS_1024);
     device.m_streamTypes.push_back(CAEStreamInfo::STREAM_TYPE_DTS_512);
     device.m_dataFormats.push_back(AE_FMT_RAW);
+    // ATV cant do below
+//    device.m_streamTypes.push_back(CAEStreamInfo::STREAM_TYPE_DTSHD);
+//    device.m_streamTypes.push_back(CAEStreamInfo::STREAM_TYPE_TRUEHD);
   }
   else
     device.m_deviceType = AE_DEVTYPE_PCM;
@@ -575,7 +574,9 @@ static void EnumerateDevices(AEDeviceInfoList &list)
   // there are more supported ( one of those 2 gets resampled
   // by coreaudio anyway) - but for keeping it save ignore
   // the others...
+#if !defined(TARGET_DARWIN_TVOS)
   device.m_sampleRates.push_back(44100);
+#endif
   device.m_sampleRates.push_back(48000);
 
   device.m_dataFormats.push_back(AE_FMT_S16LE);
@@ -594,7 +595,7 @@ static void EnumerateDevices(AEDeviceInfoList &list)
 AEDeviceInfoList CAESinkDARWINIOS::m_devices;
 
 CAESinkDARWINIOS::CAESinkDARWINIOS()
-:   m_audioSink(NULL)
+:   m_audioSink(nullptr)
 {
 }
 
@@ -646,8 +647,10 @@ bool CAESinkDARWINIOS::Initialize(AEAudioFormat &format, std::string &device)
     case 44100:
     case 88200:
     case 176400:
+#if !defined(TARGET_DARWIN_TVOS)
       audioFormat.mSampleRate = 44100;
       break;
+#endif
     default:
     case 8000:
     case 12000:
@@ -684,15 +687,14 @@ bool CAESinkDARWINIOS::Initialize(AEAudioFormat &format, std::string &device)
   format.m_sampleRate = m_audioSink->getRealisedSampleRate();
   m_format = format;
 
-  m_audioSink->play(false);
+  m_audioSink->activate();
 
   return true;
 }
 
 void CAESinkDARWINIOS::Deinitialize()
 {
-  delete m_audioSink;
-  m_audioSink = NULL;
+  SAFE_DELETE(m_audioSink);
 }
 
 void CAESinkDARWINIOS::GetDelay(AEDelayStatus& status)
