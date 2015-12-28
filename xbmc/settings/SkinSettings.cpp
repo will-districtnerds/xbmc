@@ -89,6 +89,11 @@ void CSkinSettings::Reset()
   g_infoManager.ResetCache();
 }
 
+void CSkinSettings::SaveXMLSettings()
+{
+  g_SkinInfo->SaveSettings();
+}
+
 bool CSkinSettings::Load(const TiXmlNode *settings)
 {
   if (settings == nullptr)
