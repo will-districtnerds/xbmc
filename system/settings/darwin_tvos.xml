@@ -38,25 +38,25 @@
             <setting id="input.appleremotesequencetime">
                 <visible>false</visible>
             </setting>
-            <setting id="input.applesiri" type="boolean" label="24148" help="24149">
+            <setting id="input.applesiri" type="boolean" label="24153" help="24154">
                 <level>1</level>
                 <default>false</default>
                 <control type="toggle" />
             </setting>
-            <setting id="input.applesiritimeoutenabled" type="boolean" label="24156" help="24157">
+            <setting id="input.applesiritimeoutenabled" type="boolean" label="24161" help="24162">
                 <level>1</level>
                 <default>true</default>
                 <control type="toggle" />
             </setting>
-            <setting id="input.applesiritimeout" type="integer" label="24150" help="24151">
+            <setting id="input.applesiritimeout" type="integer" label="24155" help="24156">
                 <level>1</level>
                 <default>60</default>
                 <constraints>
                     <options>
-                        <option label="24152">30</option>
-                        <option label="24153">60</option>
-                        <option label="24154">90</option>
-                        <option label="24155">120</option>
+                        <option label="24157">30</option>
+                        <option label="24158">60</option>
+                        <option label="24159">90</option>
+                        <option label="24160">120</option>
                     </options>
                 </constraints>
                 <control type="list" format="integer" />
