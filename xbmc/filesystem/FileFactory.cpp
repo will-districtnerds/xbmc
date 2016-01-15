@@ -79,6 +79,10 @@
 #include "addons/VFSEntry.h"
 #include "addons/BinaryAddonCache.h"
 
+#if defined(TARGET_DARWIN_TVOS)
+#include "filesystem/TVOSFile.h"
+#endif
+
 using namespace ADDON;
 using namespace XFILE;
 
@@ -129,7 +133,19 @@ IFile* CFileFactory::CreateLoader(const CURL& url)
   else if (url.IsProtocol("multipath")) return new CMultiPathFile();
   else if (url.IsProtocol("image")) return new CImageFile();
 #ifdef TARGET_POSIX
-  else if (url.IsProtocol("file") || url.GetProtocol().empty()) return new CPosixFile();
+  else if (url.IsProtocol("file") || url.GetProtocol().empty())
+  {
+#if defined(TARGET_DARWIN_TVOS)
+    if (CTVOSFile::WantsFile(url))
+    {
+      return new CTVOSFile();
+    }
+    else
+#endif
+    {
+      return new CPosixFile();
+    }
+  }
 #elif defined(TARGET_WINDOWS)
   else if (url.IsProtocol("file") || url.GetProtocol().empty()) return new CWin32File();
 #endif // TARGET_WINDOWS 

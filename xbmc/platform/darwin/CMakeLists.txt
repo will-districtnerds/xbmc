@@ -3,7 +3,8 @@ set(SOURCES AutoPool.mm
             DarwinNSUserDefaults.mm
             DictionaryUtils.mm
             OSXGNUReplacements.c
-            PlatformDarwin.cpp)
+            PlatformDarwin.cpp
+            NSData+GZIP.m)
 
 set(HEADERS AutoPool.h
             DarwinNSUserDefaults.h
@@ -11,6 +12,7 @@ set(HEADERS AutoPool.h
             DictionaryUtils.h
             NSLogDebugHelpers.h
             OSXGNUReplacements.h
-            PlatformDarwin.h)
+            PlatformDarwin.h
+            NSData+GZIP.h)
 
 core_add_library(platform_darwin)
