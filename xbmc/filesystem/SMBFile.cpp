@@ -355,6 +355,9 @@ bool CSMBFile::Open(const CURL& url)
     return false;
   }
 
+  if (strFileName.empty())
+    return false;
+
   CSingleLock lock(smb);
   struct stat tmpBuffer;
   if (smbc_stat(strFileName.c_str(), &tmpBuffer) < 0)
@@ -430,6 +433,8 @@ bool CSMBFile::Exists(const CURL& url)
 
   smb.Init();
   std::string strFileName = GetAuthenticatedPath(url);
+  if (strFileName.empty())
+    return false;
 
   struct stat info;
 
@@ -457,6 +462,9 @@ int CSMBFile::Stat(const CURL& url, struct __stat64* buffer)
 {
   smb.Init();
   std::string strFileName = GetAuthenticatedPath(url);
+  if (strFileName.empty())
+    return false;
+
   CSingleLock lock(smb);
 
   struct stat tmpBuffer = {0};
