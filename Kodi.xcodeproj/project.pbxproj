@@ -880,13 +880,6 @@
 		DF4BF01D1A4EF3410053AC56 /* DVDDemuxCC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF4BF01B1A4EF3410053AC56 /* DVDDemuxCC.cpp */; };
 		DF4BF01E1A4EF3410053AC56 /* DVDDemuxCC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF4BF01B1A4EF3410053AC56 /* DVDDemuxCC.cpp */; };
 		DF52566D1732C1890094A464 /* DVDDemuxCDDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52566B1732C1890094A464 /* DVDDemuxCDDA.cpp */; };
-		DF52763C1BE93DE7002FE86D /* OSXGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276361BE93DE7002FE86D /* OSXGLView.mm */; };
-		DF52763D1BE93DE7002FE86D /* OSXGLWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */; };
-		DF52763E1BE93DE7002FE86D /* XBMCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */; };
-		DF5276411BE93DF8002FE86D /* DictionaryUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */; };
-		DF5276421BE93DF8002FE86D /* DictionaryUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */; };
-		DF5276441BE93F66002FE86D /* cocoa_monitor.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276431BE93F66002FE86D /* cocoa_monitor.mm */; };
-		DF5276451BE93F66002FE86D /* cocoa_monitor.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF5276431BE93F66002FE86D /* cocoa_monitor.mm */; };
 		DF5276E1151BAEDA00B5B63B /* Base64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52769A151BAEDA00B5B63B /* Base64.cpp */; };
 		DF5276E2151BAEDA00B5B63B /* HttpResponse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52769C151BAEDA00B5B63B /* HttpResponse.cpp */; };
 		DF527734151BAF4C00B5B63B /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF52772B151BAF4C00B5B63B /* WebSocket.cpp */; };
@@ -921,14 +914,11 @@
 		DF89901D1709BB2D00B35C21 /* MediaSourceSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF8990181709BB2D00B35C21 /* MediaSourceSettings.cpp */; };
 		DF89901E1709BB2D00B35C21 /* SkinSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF89901A1709BB2D00B35C21 /* SkinSettings.cpp */; };
 		DF8990211709BB5400B35C21 /* ViewStateSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF89901F1709BB5400B35C21 /* ViewStateSettings.cpp */; };
-		DF91E9341C0A1C610011084D /* HotKeyController.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91E92A1C0A1C610011084D /* HotKeyController.m */; };
 		DF91E9351C0A1C610011084D /* OSXTextInputResponder.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF91E92E1C0A1C610011084D /* OSXTextInputResponder.mm */; };
 		DF91E9361C0A1C610011084D /* smc.c in Sources */ = {isa = PBXBuildFile; fileRef = DF91E92F1C0A1C610011084D /* smc.c */; };
 		DF91E9371C0A1C610011084D /* XBMCHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF91E9311C0A1C610011084D /* XBMCHelper.cpp */; };
 		DF91E93A1C0A21D60011084D /* xbmc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF91E9381C0A21D60011084D /* xbmc.cpp */; };
 		DF91E93B1C0A21D60011084D /* xbmc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF91E9381C0A21D60011084D /* xbmc.cpp */; };
-		DF91E93E1C0A26350011084D /* SDLMain.mm in Sources */ = {isa = PBXBuildFile; fileRef = DF91E93D1C0A26350011084D /* SDLMain.mm */; };
-		DF91E9401C0A29530011084D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF91E93F1C0A29530011084D /* main.cpp */; };
 		DF923E5D1A11536A008CDB0C /* DataCacheCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF923E5B1A11536A008CDB0C /* DataCacheCore.cpp */; };
 		DF923E5E1A11536A008CDB0C /* DataCacheCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF923E5B1A11536A008CDB0C /* DataCacheCore.cpp */; };
 		DF93D69A1444A8B1007C6459 /* DirectoryCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DF93D6651444A8B0007C6459 /* DirectoryCache.cpp */; };
@@ -1039,6 +1029,10 @@
 		DFDBEECD1C1770BC0051C447 /* CocoaInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFDBEECC1C1770BC0051C447 /* CocoaInterface.mm */; };
 		DFDE5D511AE5658200EE53AD /* PictureScalingAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDE5D4F1AE5658200EE53AD /* PictureScalingAlgorithm.cpp */; };
 		DFDE5D521AE5658200EE53AD /* PictureScalingAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDE5D4F1AE5658200EE53AD /* PictureScalingAlgorithm.cpp */; };
+		DFDF99731CAFD27F001FF63B /* cocoa_monitor.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFDF99711CAFD27F001FF63B /* cocoa_monitor.mm */; };
+		DFDF99741CAFD27F001FF63B /* XBMCApplication.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFDF99721CAFD27F001FF63B /* XBMCApplication.mm */; };
+		DFDF99791CAFD2B0001FF63B /* OSXGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFDF99761CAFD2B0001FF63B /* OSXGLView.mm */; };
+		DFDF997A1CAFD2B0001FF63B /* OSXGLWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFDF99781CAFD2B0001FF63B /* OSXGLWindow.mm */; };
 		DFE4095B17417FDF00473BD9 /* LegacyPathTranslation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFE4095917417FDF00473BD9 /* LegacyPathTranslation.cpp */; };
 		DFE4BE061C661C5F0048EB03 /* AnnounceReceiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFE4BE051C661C5F0048EB03 /* AnnounceReceiver.mm */; };
 		DFEA4B501B5271EB00562321 /* ActiveAEDSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C973CE71B5037EF0002A874 /* ActiveAEDSP.cpp */; };
@@ -3766,16 +3760,6 @@
 		DF4BF01C1A4EF3410053AC56 /* DVDDemuxCC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDDemuxCC.h; sourceTree = "<group>"; };
 		DF52566B1732C1890094A464 /* DVDDemuxCDDA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDDemuxCDDA.cpp; sourceTree = "<group>"; };
 		DF52566C1732C1890094A464 /* DVDDemuxCDDA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDDemuxCDDA.h; sourceTree = "<group>"; };
-		DF5276351BE93DE7002FE86D /* OSXGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLView.h; sourceTree = "<group>"; };
-		DF5276361BE93DE7002FE86D /* OSXGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLView.mm; sourceTree = "<group>"; };
-		DF5276371BE93DE7002FE86D /* OSXGLWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLWindow.h; sourceTree = "<group>"; };
-		DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLWindow.mm; sourceTree = "<group>"; };
-		DF5276391BE93DE7002FE86D /* OSXGLWindow.mm.orig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OSXGLWindow.mm.orig; sourceTree = "<group>"; };
-		DF52763A1BE93DE7002FE86D /* XBMCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCApplication.h; sourceTree = "<group>"; };
-		DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XBMCApplication.mm; sourceTree = "<group>"; };
-		DF52763F1BE93DF8002FE86D /* DictionaryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryUtils.h; sourceTree = "<group>"; };
-		DF5276401BE93DF8002FE86D /* DictionaryUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DictionaryUtils.mm; sourceTree = "<group>"; };
-		DF5276431BE93F66002FE86D /* cocoa_monitor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cocoa_monitor.mm; sourceTree = "<group>"; };
 		DF52769A151BAEDA00B5B63B /* Base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base64.cpp; sourceTree = "<group>"; };
 		DF52769B151BAEDA00B5B63B /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		DF52769C151BAEDA00B5B63B /* HttpResponse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpResponse.cpp; sourceTree = "<group>"; };
@@ -3827,8 +3811,6 @@
 		DF89901B1709BB2D00B35C21 /* SkinSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkinSettings.h; sourceTree = "<group>"; };
 		DF89901F1709BB5400B35C21 /* ViewStateSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ViewStateSettings.cpp; sourceTree = "<group>"; };
 		DF8990201709BB5400B35C21 /* ViewStateSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewStateSettings.h; sourceTree = "<group>"; };
-		DF91E9291C0A1C610011084D /* HotKeyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKeyController.h; sourceTree = "<group>"; };
-		DF91E92A1C0A1C610011084D /* HotKeyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKeyController.m; sourceTree = "<group>"; };
 		DF91E92B1C0A1C610011084D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF91E92D1C0A1C610011084D /* OSXTextInputResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXTextInputResponder.h; sourceTree = "<group>"; };
 		DF91E92E1C0A1C610011084D /* OSXTextInputResponder.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXTextInputResponder.mm; sourceTree = "<group>"; };
@@ -3838,9 +3820,6 @@
 		DF91E9321C0A1C610011084D /* XBMCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCHelper.h; sourceTree = "<group>"; };
 		DF91E9381C0A21D60011084D /* xbmc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xbmc.cpp; sourceTree = "<group>"; };
 		DF91E9391C0A21D60011084D /* xbmc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmc.h; sourceTree = "<group>"; };
-		DF91E93C1C0A26350011084D /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
-		DF91E93D1C0A26350011084D /* SDLMain.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SDLMain.mm; sourceTree = "<group>"; };
-		DF91E93F1C0A29530011084D /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DF923E5B1A11536A008CDB0C /* DataCacheCore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataCacheCore.cpp; sourceTree = "<group>"; };
 		DF923E5C1A11536A008CDB0C /* DataCacheCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCacheCore.h; sourceTree = "<group>"; };
 		DF93D6651444A8B0007C6459 /* DirectoryCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirectoryCache.cpp; sourceTree = "<group>"; };
@@ -3988,6 +3967,13 @@
 		DFDBEECC1C1770BC0051C447 /* CocoaInterface.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CocoaInterface.mm; sourceTree = "<group>"; };
 		DFDE5D4F1AE5658200EE53AD /* PictureScalingAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PictureScalingAlgorithm.cpp; sourceTree = "<group>"; };
 		DFDE5D501AE5658200EE53AD /* PictureScalingAlgorithm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureScalingAlgorithm.h; sourceTree = "<group>"; };
+		DFDF99711CAFD27F001FF63B /* cocoa_monitor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cocoa_monitor.mm; sourceTree = "<group>"; };
+		DFDF99721CAFD27F001FF63B /* XBMCApplication.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = XBMCApplication.mm; sourceTree = "<group>"; };
+		DFDF99751CAFD2B0001FF63B /* OSXGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLView.h; sourceTree = "<group>"; };
+		DFDF99761CAFD2B0001FF63B /* OSXGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLView.mm; sourceTree = "<group>"; };
+		DFDF99771CAFD2B0001FF63B /* OSXGLWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXGLWindow.h; sourceTree = "<group>"; };
+		DFDF99781CAFD2B0001FF63B /* OSXGLWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXGLWindow.mm; sourceTree = "<group>"; };
+		DFDF997B1CAFD6C6001FF63B /* XBMCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCApplication.h; sourceTree = "<group>"; };
 		DFE4095917417FDF00473BD9 /* LegacyPathTranslation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LegacyPathTranslation.cpp; sourceTree = "<group>"; };
 		DFE4095A17417FDF00473BD9 /* LegacyPathTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegacyPathTranslation.h; sourceTree = "<group>"; };
 		DFE4BE041C661C5F0048EB03 /* AnnounceReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnounceReceiver.h; sourceTree = "<group>"; };
@@ -6090,6 +6076,10 @@
 		43FAC8CE12D63CA800F67914 /* osx */ = {
 			isa = PBXGroup;
 			children = (
+				DFDF99751CAFD2B0001FF63B /* OSXGLView.h */,
+				DFDF99761CAFD2B0001FF63B /* OSXGLView.mm */,
+				DFDF99771CAFD2B0001FF63B /* OSXGLWindow.h */,
+				DFDF99781CAFD2B0001FF63B /* OSXGLWindow.mm */,
 				F558F25413ABCF7800631E12 /* WinEventsOSX.h */,
 				F558F25513ABCF7800631E12 /* WinEventsOSX.mm */,
 				7C779E2C104A57E500F444C4 /* WinSystemOSX.h */,
@@ -6160,8 +6150,6 @@
 				68AE5BDC1C92421800C4D527 /* PeripheralAddon.h */,
 				68AE5BDD1C92421800C4D527 /* PeripheralAddonTranslator.cpp */,
 				68AE5BDE1C92421800C4D527 /* PeripheralAddonTranslator.h */,
-				395938741AC310B00053A590 /* posix */,
-				552A226815F7E14B0015C0D0 /* main.cpp */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -7315,20 +7303,6 @@
 			path = contrib;
 			sourceTree = "<group>";
 		};
-		DF5276341BE93DE7002FE86D /* OSX */ = {
-			isa = PBXGroup;
-			children = (
-				DF5276351BE93DE7002FE86D /* OSXGLView.h */,
-				DF5276361BE93DE7002FE86D /* OSXGLView.mm */,
-				DF5276371BE93DE7002FE86D /* OSXGLWindow.h */,
-				DF5276381BE93DE7002FE86D /* OSXGLWindow.mm */,
-				DF5276391BE93DE7002FE86D /* OSXGLWindow.mm.orig */,
-				DF52763A1BE93DE7002FE86D /* XBMCApplication.h */,
-				DF52763B1BE93DE7002FE86D /* XBMCApplication.mm */,
-			);
-			path = OSX;
-			sourceTree = "<group>";
-		};
 		DF527729151BAF4C00B5B63B /* websocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -7374,15 +7348,14 @@
 			children = (
 				DFDBEECB1C1770BC0051C447 /* CocoaInterface.h */,
 				DFDBEECC1C1770BC0051C447 /* CocoaInterface.mm */,
-				DF91E9291C0A1C610011084D /* HotKeyController.h */,
-				DF91E92A1C0A1C610011084D /* HotKeyController.m */,
+				DFDF99711CAFD27F001FF63B /* cocoa_monitor.mm */,
 				DF91E92B1C0A1C610011084D /* Info.plist */,
 				DF91E92D1C0A1C610011084D /* OSXTextInputResponder.h */,
 				DF91E92E1C0A1C610011084D /* OSXTextInputResponder.mm */,
-				DF91E93C1C0A26350011084D /* SDLMain.h */,
-				DF91E93D1C0A26350011084D /* SDLMain.mm */,
 				DF91E92F1C0A1C610011084D /* smc.c */,
 				DF91E9301C0A1C610011084D /* smc.h */,
+				DFDF997B1CAFD6C6001FF63B /* XBMCApplication.h */,
+				DFDF99721CAFD27F001FF63B /* XBMCApplication.mm */,
 				DF91E9311C0A1C610011084D /* XBMCHelper.cpp */,
 				DF91E9321C0A1C610011084D /* XBMCHelper.h */,
 			);
@@ -7538,7 +7511,6 @@
 		DFD717231C09EDCE0025D964 /* posix */ = {
 			isa = PBXGroup;
 			children = (
-				DF91E93F1C0A29530011084D /* main.cpp */,
 				DFD717241C09EDCE0025D964 /* MessagePrinter.cpp */,
 			);
 			path = posix;
@@ -9711,7 +9683,6 @@
 				E38E1FA90D25F9FD00618676 /* VideoPlayerSubtitle.cpp in Sources */,
 				395C2A141A9F072400EBC7AD /* ResourceFile.cpp in Sources */,
 				E38E1FAA0D25F9FD00618676 /* VideoPlayerVideo.cpp in Sources */,
-				DF91E93E1C0A26350011084D /* SDLMain.mm in Sources */,
 				E38E1FAB0D25F9FD00618676 /* DVDStreamInfo.cpp in Sources */,
 				E38E1FAC0D25F9FD00618676 /* DVDFactorySubtitle.cpp in Sources */,
 				E38E1FAD0D25F9FD00618676 /* DVDSubtitleLineCollection.cpp in Sources */,
@@ -9839,7 +9810,6 @@
 				3994426E1A8DD920006C39E9 /* VideoLibraryCleaningJob.cpp in Sources */,
 				E38E20A00D25F9FD00618676 /* GUIDialogVisualisationPresetList.cpp in Sources */,
 				E38E20A20D25F9FD00618676 /* GUIDialogVolumeBar.cpp in Sources */,
-				DF91E9401C0A29530011084D /* main.cpp in Sources */,
 				DF396ED31C42A25F00214C1A /* DictionaryUtils.mm in Sources */,
 				E38E20A30D25F9FD00618676 /* GUIDialogYesNo.cpp in Sources */,
 				E38E20A40D25F9FD00618676 /* GUILargeTextureManager.cpp in Sources */,
@@ -9859,7 +9829,6 @@
 				395C29F61A98B44B00EBC7AD /* AddonModuleXbmcwsgi.cpp in Sources */,
 				E38E20B80D25F9FD00618676 /* GUIWindowMusicPlaylistEditor.cpp in Sources */,
 				DF91E9351C0A1C610011084D /* OSXTextInputResponder.mm in Sources */,
-				DF52763C1BE93DE7002FE86D /* OSXGLView.mm in Sources */,
 				E38E20BB0D25F9FD00618676 /* GUIDialogVideoOSD.cpp in Sources */,
 				DFC6F4B91AFF7CB10039A7FA /* kiss_fftr.c in Sources */,
 				E38E20BC0D25F9FD00618676 /* GUIWindowPictures.cpp in Sources */,
@@ -9920,6 +9889,7 @@
 				E38E22580D25F9FE00618676 /* savepos.cpp in Sources */,
 				E38E22590D25F9FE00618676 /* scantree.cpp in Sources */,
 				E38E225A0D25F9FE00618676 /* sha1.cpp in Sources */,
+				DFDF99791CAFD2B0001FF63B /* OSXGLView.mm in Sources */,
 				E38E225D0D25F9FE00618676 /* strfn.cpp in Sources */,
 				E38E225E0D25F9FE00618676 /* strlist.cpp in Sources */,
 				E38E22600D25F9FE00618676 /* system.cpp in Sources */,
@@ -9954,7 +9924,6 @@
 				E38E22B30D25F9FE00618676 /* SectionLoader.cpp in Sources */,
 				E38E22B40D25F9FE00618676 /* VideoSettings.cpp in Sources */,
 				E38E22B80D25F9FE00618676 /* SlideShowPicture.cpp in Sources */,
-				DF5276441BE93F66002FE86D /* cocoa_monitor.mm in Sources */,
 				E38E22BA0D25F9FE00618676 /* Song.cpp in Sources */,
 				E38E22BF0D25F9FE00618676 /* ThumbLoader.cpp in Sources */,
 				E38E22C00D25F9FE00618676 /* ThumbnailCache.cpp in Sources */,
@@ -10174,7 +10143,6 @@
 				18B7C7C21294222E009E7A26 /* GUIFontTTF.cpp in Sources */,
 				18B7C7C31294222E009E7A26 /* GUIFontTTFDX.cpp in Sources */,
 				18B7C7C41294222E009E7A26 /* GUIFontTTFGL.cpp in Sources */,
-				DF52763D1BE93DE7002FE86D /* OSXGLWindow.mm in Sources */,
 				18B7C7C51294222E009E7A26 /* GUIImage.cpp in Sources */,
 				18B7C7C61294222E009E7A26 /* GUIIncludes.cpp in Sources */,
 				18B7C7C71294222E009E7A26 /* GUIInfoTypes.cpp in Sources */,
@@ -10284,6 +10252,7 @@
 				18ACF84313596C9B00B67371 /* RecentlyAddedJob.cpp in Sources */,
 				C807114D135DB5CC002F601B /* InputOperations.cpp in Sources */,
 				C8EC5D0E1369519D00CCC10D /* XBMC_keytable.cpp in Sources */,
+				DFDF997A1CAFD2B0001FF63B /* OSXGLWindow.mm in Sources */,
 				1840B74D13993D8A007C848B /* JSONVariantParser.cpp in Sources */,
 				1840B75313993DA0007C848B /* JSONVariantWriter.cpp in Sources */,
 				18B700E113A6A5750009C1AF /* AddonVersion.cpp in Sources */,
@@ -10362,7 +10331,6 @@
 				DF93D6AB1444A8B1007C6459 /* ShoutcastFile.cpp in Sources */,
 				DF93D6AD1444A8B1007C6459 /* SMBFile.cpp in Sources */,
 				DF93D6AE1444A8B1007C6459 /* SpecialProtocolFile.cpp in Sources */,
-				DF5276411BE93DF8002FE86D /* DictionaryUtils.mm in Sources */,
 				DF6A0D811A4584E80075BBFC /* OverrideDirectory.cpp in Sources */,
 				2AC7EB601C34893700BDAA95 /* PVRRecordingsPath.cpp in Sources */,
 				DF93D6B11444A8B1007C6459 /* UDFFile.cpp in Sources */,
@@ -10377,7 +10345,6 @@
 				F5ED908E15538E2300842059 /* POUtils.cpp in Sources */,
 				DFB65FB515373AE7006B8FF1 /* AEFactory.cpp in Sources */,
 				DFB65FB715373AE7006B8FF1 /* AEEncoderFFmpeg.cpp in Sources */,
-				DF52763E1BE93DE7002FE86D /* XBMCApplication.mm in Sources */,
 				DFB65FCC15373AE7006B8FF1 /* AEBitstreamPacker.cpp in Sources */,
 				DFB65FCD15373AE7006B8FF1 /* AEBuffer.cpp in Sources */,
 				DF29BCFD1B5D911800904347 /* GUIWindowEventLog.cpp in Sources */,
@@ -10405,6 +10372,7 @@
 				C84828CE156CFCD8005A996F /* GUIDialogPVRGuideOSD.cpp in Sources */,
 				C84828CF156CFCD8005A996F /* GUIDialogPVRGuideSearch.cpp in Sources */,
 				C84828D0156CFCD8005A996F /* GUIDialogPVRRecordingInfo.cpp in Sources */,
+				DFDF99741CAFD27F001FF63B /* XBMCApplication.mm in Sources */,
 				C84828D1156CFCD8005A996F /* GUIDialogPVRTimerSettings.cpp in Sources */,
 				9ABFE7A11C972D60002F1318 /* ContextMenus.cpp in Sources */,
 				C84828D4156CFCD8005A996F /* PVRDatabase.cpp in Sources */,
@@ -10581,7 +10549,6 @@
 				5558ED10176396CD00118C35 /* StereoscopicsManager.cpp in Sources */,
 				F59EED7E17AD5174005BB7C6 /* ApplicationPlayer.cpp in Sources */,
 				DF28DF4D17B8379E0077F41A /* ProfilesOperations.cpp in Sources */,
-				DF91E9341C0A1C610011084D /* HotKeyController.m in Sources */,
 				DFD882F817DD1A5B001516FE /* AddonPythonInvoker.cpp in Sources */,
 				DFD882E917DD189E001516FE /* StringValidation.cpp in Sources */,
 				F500E35617F3412C004FC217 /* WinEvents.cpp in Sources */,
@@ -10739,6 +10706,7 @@
 				7CCDA863192756250074CF51 /* NptXml.cpp in Sources */,
 				7CCDA86C192756250074CF51 /* NptZip.cpp in Sources */,
 				DF56EF1F1A798A3F00CAAEFB /* HTTPFileHandler.cpp in Sources */,
+				DFDF99731CAFD27F001FF63B /* cocoa_monitor.mm in Sources */,
 				7CCDAA82192756250074CF51 /* NptPosixDynamicLibraries.cpp in Sources */,
 				7CCDAA85192756250074CF51 /* NptPosixEnvironment.cpp in Sources */,
 				7CCDAA8B192756250074CF51 /* NptPosixNetwork.cpp in Sources */,
@@ -11097,7 +11065,6 @@
 				7C8E02231BA35D0B0072E8B2 /* Builtins.cpp in Sources */,
 				E49912AC174E5D9900741B6D /* SFTPDirectory.cpp in Sources */,
 				E49912AD174E5D9900741B6D /* SFTPFile.cpp in Sources */,
-				DF5276421BE93DF8002FE86D /* DictionaryUtils.mm in Sources */,
 				E49912AE174E5D9900741B6D /* ShoutcastFile.cpp in Sources */,
 				DF0E4AD51AD5986F00A75430 /* GUIDialogPVRRadioRDSInfo.cpp in Sources */,
 				395C29C21A98A0A000EBC7AD /* Webinterface.cpp in Sources */,
@@ -11120,7 +11087,6 @@
 				DF1D2DF11B6E85EE002BB9DB /* XbtFile.cpp in Sources */,
 				76AEFB3B1C8F79CE00EF2EC0 /* AddonGUIRenderingControl.cpp in Sources */,
 				E49912C2174E5DA000741B6D /* DirectoryNodeEpisodes.cpp in Sources */,
-				DF5276451BE93F66002FE86D /* cocoa_monitor.mm in Sources */,
 				E49912C3174E5DA000741B6D /* DirectoryNodeGrouped.cpp in Sources */,
 				E49912C4174E5DA000741B6D /* DirectoryNodeMoviesOverview.cpp in Sources */,
 				E49912C5174E5DA000741B6D /* DirectoryNodeMusicVideosOverview.cpp in Sources */,
