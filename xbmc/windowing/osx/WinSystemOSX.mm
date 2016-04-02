@@ -32,22 +32,19 @@
 #include "utils/StringUtils.h"
 #include "platform/darwin/osx/XBMCHelper.h"
 #include "utils/SystemInfo.h"
-#include "platform/darwin/osx/CocoaInterface.h"
 #include "platform/darwin/DictionaryUtils.h"
 #include "platform/darwin/DarwinUtils.h"
-#undef BOOL
+#include "platform/darwin/osx/CocoaInterface.h"
+#include "platform/darwin/osx/OSXTextInputResponder.h"
+#include "windowing/osx/OSXGLView.h"
+#include "windowing/osx/OSXGLWindow.h"
 
-#import "osx/DarwinUtils.h"
-#import "osx/DictionaryUtils.h"
-#import "osx/CocoaInterface.h"
-#import "osx/OSX/OSXGLView.h"
-#import "osx/OSX/OSXGLWindow.h"
-#import "osx/OSXTextInputResponder.h"
+#undef BOOL
 
 #import <Cocoa/Cocoa.h>
 #import <IOKit/pwr_mgt/IOPMLib.h>
 #import <IOKit/graphics/IOGraphicsLib.h>
-#import "platform/darwin/osx/OSXTextInputResponder.h"
+
 
 // turn off deprecated warning spew.
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
