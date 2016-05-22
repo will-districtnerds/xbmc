@@ -34,10 +34,7 @@
 #include "dialogs/GUIDialogKeyboardGeneric.h"
 #if defined(TARGET_DARWIN_IOS)
 #include "dialogs/GUIDialogKeyboardTouch.h"
-#elif defined(TARGET_DARWIN_TVOS)
-  #include "platform/darwin/tvos/MainKeyboard.h"
 #endif
-#include "windowing/WindowingFactory.h"
 
 using namespace KODI::MESSAGING;
 
@@ -97,16 +94,13 @@ bool CGUIKeyboardFactory::ShowAndGetInput(std::string& aTextString, CVariant hea
     headingStr = heading.asString();
   else if (heading.isInteger() && heading.asInteger())
     headingStr = g_localizeStrings.Get((uint32_t)heading.asInteger());
-
-#if defined(TARGET_DARWIN_IOS)
+  
+#if defined(TARGET_DARWIN_IOS) || defined(TARGET_DARWIN_TVOS)
   kb = g_windowManager.GetWindow<CGUIDialogKeyboardTouch>(WINDOW_DIALOG_KEYBOARD_TOUCH);
-#elif defined(TARGET_DARWIN_TVOS)
-  if (g_Windowing.GetCurrentScreen() == 0)
-    kb = g_windowManager.GetWindow<CMainKeyboard>(WINDOW_DIALOG_KEYBOARD_TOUCH);
 #else
   kb = g_windowManager.GetWindow<CGUIDialogKeyboardGeneric>(WINDOW_DIALOG_KEYBOARD);
 #endif
-
+  
   if (kb)
   {
     g_activeKeyboard = kb;
