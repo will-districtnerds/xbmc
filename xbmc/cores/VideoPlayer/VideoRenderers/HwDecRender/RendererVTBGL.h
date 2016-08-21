@@ -43,8 +43,13 @@ protected:
   virtual void AfterRenderHook(int idx) override;
 
   // textures
+  bool Upload420(int index);
+  bool Upload422(int index);
   virtual bool UploadTexture(int index) override;
   virtual void DeleteTexture(int index) override;
+  
+  bool CreateTexture422(int index);
+  bool CreateTexture420(int index);
   virtual bool CreateTexture(int index) override;
 };
 
