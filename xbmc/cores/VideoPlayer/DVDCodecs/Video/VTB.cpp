@@ -190,11 +190,20 @@ bool CDecoder::GetPicture(AVCodecContext* avctx, AVFrame* frame, DVDVideoPicture
   // lock the CVPixelBuffer down
   CVPixelBufferLockBaseAddress(picture_buffer_ref, 0);
   int row_stride = CVPixelBufferGetBytesPerRowOfPlane(picture_buffer_ref, 0);
+  int width = CVPixelBufferGetWidth(picture_buffer_ref);
+  int height = CVPixelBufferGetHeight(picture_buffer_ref);
   uint8_t *base_ptr = (uint8_t*)CVPixelBufferGetBaseAddressOfPlane(picture_buffer_ref, 0);
   if (base_ptr)
   {
     if (pixel_buffer_format == kCVPixelFormatType_422YpCbCr8)
-      UYVY422_to_YUV420P(base_ptr, row_stride, picture);
+    {
+      //UYVY422_to_YUV420P(base_ptr, row_stride, picture);
+      picture->data[0] = base_ptr;
+      picture->iLineSize[0] = row_stride;
+      picture->iWidth = width;
+      picture->iHeight = height;
+      picture->format = RENDER_FMT_UYVY422;
+    }
     //else if (pixel_buffer_format == kCVPixelFormatType_32BGRA)
     //  BGRA_to_YUV420P(base_ptr, row_stride, pDvdVideoPicture);
   }
