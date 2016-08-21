@@ -45,8 +45,13 @@ protected:
   virtual bool LoadShadersHook();
 
   // textures
+  bool Upload420(int index);
+  bool Upload422(int index);
   virtual bool UploadTexture(int index);
   virtual void DeleteTexture(int index);
+  
+  bool CreateTexture422(int index);
+  bool CreateTexture420(int index);
   virtual bool CreateTexture(int index);
 };
 
