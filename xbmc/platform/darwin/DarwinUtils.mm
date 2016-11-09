@@ -504,6 +504,15 @@ bool CDarwinUtils::IsIosSandboxed(void)
       {
         ret = 1;
       }
+      
+      // since ios10 the sandbox filesystem has moved to container approach
+      // we are also sandboxed if this is our bundle path - bundle path is now in /var/Containers
+      // instead of /var/mobile/
+      if (strlen("/var/Containers/Bundle/") < path_size &&
+          strncmp(given_path, "/var/Containers/Bundle/", strlen("/var/Containers/Bundle/")) == 0)
+      {
+        ret = 1;
+      }
     }
   }
   return ret == 1;
