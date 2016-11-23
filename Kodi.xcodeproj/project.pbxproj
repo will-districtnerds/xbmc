@@ -2202,7 +2202,6 @@
 		DFE4BE061C661C5F0048EB03 /* AnnounceReceiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFE4BE051C661C5F0048EB03 /* AnnounceReceiver.mm */; };
 		DFE4BE091C662A660048EB03 /* TVOSTopShelf.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFE4BE081C662A660048EB03 /* TVOSTopShelf.mm */; };
 		DFE4BE111C6634ED0048EB03 /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFE4BE101C6634ED0048EB03 /* TVServices.framework */; };
-		DFE4BE191C6634ED0048EB03 /* TVOSTopShelf.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DFE4BE0E1C6634ED0048EB03 /* TVOSTopShelf.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DFE4BE261C6635300048EB03 /* ServiceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DFE4BE221C6635300048EB03 /* ServiceProvider.m */; };
 		DFE4BE291C663BD60048EB03 /* AnnounceReceiver.mm in Sources */ = {isa = PBXBuildFile; fileRef = DFE4BE051C661C5F0048EB03 /* AnnounceReceiver.mm */; };
 		DFE704181D15803F004EAA9D /* ActiveAEDSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76EC19BC1D15514200D4AF19 /* ActiveAEDSP.cpp */; };
@@ -2242,6 +2241,7 @@
 		DFFA440C19104C1300C3923B /* AppIcon72x72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFFA43E119104BFA00C3923B /* AppIcon72x72@2x.png */; };
 		DFFA440D19104C1300C3923B /* AppIcon76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = DFFA43E219104BFA00C3923B /* AppIcon76x76.png */; };
 		DFFA440E19104C1300C3923B /* AppIcon76x76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DFFA43E319104BFA00C3923B /* AppIcon76x76@2x.png */; };
+		DFFAA2C21DE5FF67005E9A0F /* DVDVideoCodecVideoToolBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFFAA2BF1DE5FEDB005E9A0F /* DVDVideoCodecVideoToolBox.cpp */; };
 		DFFB395D1C5E36B6002C5879 /* InfoScanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 228FA65C1C53F9D50023BBF0 /* InfoScanner.cpp */; };
 		E33206380D5070AA00435CE3 /* DVDDemuxVobsub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E33206370D5070AA00435CE3 /* DVDDemuxVobsub.cpp */; };
 		E33466A60D2E5103005A65EC /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E33466A50D2E5103005A65EC /* IOKit.framework */; };
@@ -3455,28 +3455,7 @@
 			remoteGlobalIDString = 8DD76F740486A8DE00D96B5E;
 			remoteInfo = Kodi;
 		};
-		DFE4BE171C6634ED0048EB03 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DFE4BE0D1C6634ED0048EB03;
-			remoteInfo = TVOSTopShelf;
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		DFE4BE1D1C6634EE0048EB03 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				DFE4BE191C6634ED0048EB03 /* TVOSTopShelf.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0E3036EA1760F68A00D93596 /* FavouritesDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FavouritesDirectory.cpp; sourceTree = "<group>"; };
@@ -5292,6 +5271,8 @@
 		DFFA43FC19104BFA00C3923B /* icon_32x32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_32x32@2x.png"; sourceTree = "<group>"; };
 		DFFA43FD19104BFA00C3923B /* icon_512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512x512.png; sourceTree = "<group>"; };
 		DFFA43FE19104BFA00C3923B /* icon_512x512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_512x512@2x.png"; sourceTree = "<group>"; };
+		DFFAA2BF1DE5FEDB005E9A0F /* DVDVideoCodecVideoToolBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDVideoCodecVideoToolBox.cpp; sourceTree = "<group>"; };
+		DFFAA2C01DE5FEDB005E9A0F /* DVDVideoCodecVideoToolBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDVideoCodecVideoToolBox.h; sourceTree = "<group>"; };
 		E33206370D5070AA00435CE3 /* DVDDemuxVobsub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDDemuxVobsub.cpp; sourceTree = "<group>"; };
 		E33466A50D2E5103005A65EC /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E36578860D3AA7B40033CC1C /* VideoPlayerCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPlayerCodec.cpp; sourceTree = "<group>"; };
@@ -9397,6 +9378,8 @@
 		E38E153A0D25F9F900618676 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				DFFAA2BF1DE5FEDB005E9A0F /* DVDVideoCodecVideoToolBox.cpp */,
+				DFFAA2C01DE5FEDB005E9A0F /* DVDVideoCodecVideoToolBox.h */,
 				DFBD336A1BD531CB001A8FEE /* DllVideoToolBox.h */,
 				F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */,
 				E38E153C0D25F9F900618676 /* DVDVideoCodec.h */,
@@ -10797,12 +10780,10 @@
 				DFC67EF91C1C642800360EDE /* copy frameworks */,
 				DFC67EFA1C1C642800360EDE /* genoutputdirlink */,
 				DFC67EFB1C1C642800360EDE /* codesign */,
-				DFE4BE1D1C6634EE0048EB03 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				DFE4BE181C6634ED0048EB03 /* PBXTargetDependency */,
 			);
 			name = "Kodi-TVOS";
 			productName = "Kodi-iOS";
@@ -13193,6 +13174,7 @@
 				DFC67DDE1C1C642800360EDE /* SystemGlobals.cpp in Sources */,
 				DFC67DDF1C1C642800360EDE /* TextureCache.cpp in Sources */,
 				DFC67DE01C1C642800360EDE /* TextureCacheJob.cpp in Sources */,
+				DFFAA2C21DE5FF67005E9A0F /* DVDVideoCodecVideoToolBox.cpp in Sources */,
 				DFC67DE11C1C642800360EDE /* TextureDatabase.cpp in Sources */,
 				DFC67DE21C1C642800360EDE /* ThumbLoader.cpp in Sources */,
 				DFC67DE31C1C642800360EDE /* ThumbnailCache.cpp in Sources */,
@@ -14576,11 +14558,6 @@
 			target = 8DD76F740486A8DE00D96B5E /* Kodi */;
 			targetProxy = 6E2FACC30E26E08100DF79EA /* PBXContainerItemProxy */;
 		};
-		DFE4BE181C6634ED0048EB03 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DFE4BE0D1C6634ED0048EB03 /* TVOSTopShelf */;
-			targetProxy = DFE4BE171C6634ED0048EB03 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -14751,6 +14728,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -14804,6 +14782,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
