@@ -32,6 +32,10 @@
 
 #include "Video/DVDVideoCodecFFmpeg.h"
 
+#if defined(TARGET_DARWIN_TVOS)
+#include "Video/DVDVideoCodecVideoToolBox.h"
+#endif
+
 #include "Audio/DVDAudioCodecFFmpeg.h"
 #include "Audio/DVDAudioCodecPassthrough.h"
 #include "Overlay/DVDOverlayCodecSSA.h"
@@ -85,6 +89,12 @@ CDVDVideoCodec* CDVDFactoryCodec::CreateVideoCodec(CDVDStreamInfo &hint, CProces
     }
     return nullptr;
   }
+
+#if defined(TARGET_DARWIN_TVOS)
+    pCodec = OpenCodec(new CDVDVideoCodecVideoToolBox(processInfo), hint, options);
+    if (pCodec)
+      return pCodec;
+#endif
 
   // platform specifig video decoders
   if (!(hint.codecOptions & CODEC_FORCE_SOFTWARE))
