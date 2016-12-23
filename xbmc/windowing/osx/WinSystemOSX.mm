@@ -1012,6 +1012,10 @@ bool CWinSystemOSX::SetFullScreen(bool fullScreen, RESOLUTION_INFO& res, bool bl
   // need to make sure SDL tracks any window size changes
   ResizeWindowInternal(m_nWidth, m_nHeight, -1, -1, last_view);
   [[last_view window] setFrameOrigin:last_window_origin];
+  // return the mouse bounds in SDL view to prevous size
+  [ last_view setFrameSize:last_view_size ];
+  [ last_view setFrameOrigin:last_view_origin ];
+
   HandlePossibleRefreshrateChange();
 
   return true;
