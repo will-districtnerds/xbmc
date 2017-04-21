@@ -46,6 +46,12 @@ protected:
   unsigned m_renderbuffers_count;
   AVCodecContext *m_avctx;
   CProcessInfo& m_processInfo;
+  bool m_use_cvBufferRef;
+  DVDVideoPicture m_videobuffer;
+  
+  void UYVY420_to_YUV420P(uint8_t *yuv420_ptr, int yuv420_stride, DVDVideoPicture *picture);
+  void UYVY422_to_YUV420P(uint8_t *yuv422_ptr, int yuv422_stride, DVDVideoPicture *picture);
+  void BGRA_to_YUV420P(uint8_t *bgra_ptr, int bgra_stride, DVDVideoPicture *picture);
 };
 
 }
