@@ -79,6 +79,12 @@ $(PLATFORM): $(TARBALLS_LOCATION)/$(ARCHIVE) $(DEPS)
 	cd $(PLATFORM);\
 	CFLAGS="$(CFLAGS)" CXXFLAGS="$(CXXFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" \
 	./configure $(ffmpg_config)
+ifeq ($(OS), ios)
+	cd $(PLATFORM); sed -i -- 's/HAVE_CLOCK_GETTIME 1/HAVE_CLOCK_GETTIME 0/g' config.h
+endif
+ifeq ($(OS), osx)
+	cd $(PLATFORM); patch -p0 < ../01-darwin_force_422_decoding.patch
+endif
 
 build: $(PLATFORM)
 	$(MAKE) -C $(PLATFORM)
