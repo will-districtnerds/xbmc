@@ -1,0 +1,12 @@
+--- libavcodec/videotoolbox.c	2017-04-21 20:41:04.000000000 +0200
++++ libavcodec/videotoolbox.c.new	2017-04-21 20:40:49.000000000 +0200
+@@ -673,7 +673,8 @@
+ 
+     if (ret) {
+         ret->output_callback = videotoolbox_decoder_callback;
+-        ret->cv_pix_fmt_type = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;
++        //ret->cv_pix_fmt_type = kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange;
++	ret->cv_pix_fmt_type = kCVPixelFormatType_422YpCbCr8;
+     }
+ 
+     return ret;
