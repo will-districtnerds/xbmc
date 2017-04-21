@@ -31,8 +31,14 @@
 #include <OpenGL/CGLIOSurface.h>
 #include "windowing/WindowingFactory.h"
 
-struct CVTBData
+class CVTBData
 {
+public:
+  CVTBData()
+  {
+    m_vtbbuf = nullptr;
+    m_fence = 0;
+  }
   struct __CVBuffer* m_vtbbuf;
   GLuint m_fence;
 };
@@ -99,49 +105,89 @@ bool CRendererVTB::LoadShadersHook()
   return false;
 }
 
-bool CRendererVTB::CreateTexture(int index)
+bool CRendererVTB::CreateTexture420(int index)
 {
   YV12Image &im     = m_buffers[index].image;
   YUVFIELDS &fields = m_buffers[index].fields;
   YUVPLANES &planes = fields[0];
-
+  
   DeleteTexture(index);
-
+  
   memset(&im    , 0, sizeof(im));
   memset(&fields, 0, sizeof(fields));
-
+  
   im.bpp    = 1;
   im.width  = m_sourceWidth;
   im.height = m_sourceHeight;
   im.cshift_x = 1;
   im.cshift_y = 1;
-
+  
   planes[0].texwidth  = im.width;
   planes[0].texheight = im.height;
-
+  
   planes[1].texwidth  = planes[0].texwidth >> im.cshift_x;
   planes[1].texheight = planes[0].texheight >> im.cshift_y;
   planes[2].texwidth  = planes[1].texwidth;
   planes[2].texheight = planes[1].texheight;
-
+  
   for (int p = 0; p < 3; p++)
   {
     planes[p].pixpertex_x = 1;
     planes[p].pixpertex_y = 1;
   }
-
+  
   glEnable(m_textureTarget);
   glGenTextures(1, &planes[0].id);
   glGenTextures(1, &planes[1].id);
   planes[2].id = planes[1].id;
   glDisable(m_textureTarget);
+  
+  return true;
+}
 
+bool CRendererVTB::CreateTexture422(int index)
+{
+  YV12Image &im     = m_buffers[index].image;
+  YUVFIELDS &fields = m_buffers[index].fields;
+  YUVPLANE  &plane  = fields[0][0];
+  
+  DeleteTexture(index);
+  
+  memset(&im    , 0, sizeof(im));
+  memset(&fields, 0, sizeof(fields));
+  
+  im.bpp    = 1;
+  im.width  = m_sourceWidth;
+  im.height = m_sourceHeight;
+  im.cshift_x = 0;
+  im.cshift_y = 0;
+  
+  plane.pixpertex_x = 2;
+  plane.pixpertex_y = 1;
+  plane.texwidth    = im.width  / plane.pixpertex_x;
+  plane.texheight   = im.height / plane.pixpertex_y;
+  
+  if(m_renderMethod & RENDER_POT)
+  {
+    plane.texwidth  = NP2(plane.texwidth);
+    plane.texheight = NP2(plane.texheight);
+  }
+  
+  glEnable(m_textureTarget);
+  glGenTextures(1, &plane.id);
+  glDisable(m_textureTarget);
+  
+  return true;
+}
+
+bool CRendererVTB::CreateTexture(int index)
+{
+  //return CreateTexture420(index);
+  bool ret = CreateTexture422(index);
   CVTBData *data = new CVTBData();
-  data->m_fence = 0;
-  data->m_vtbbuf = nullptr;
   m_buffers[index].hwDec = data;
 
-  return true;
+  return ret;
 }
 
 void CRendererVTB::DeleteTexture(int index)
@@ -165,7 +211,7 @@ void CRendererVTB::DeleteTexture(int index)
   planes[2].id = 0;
 }
 
-bool CRendererVTB::UploadTexture(int index)
+bool CRendererVTB::Upload420(int index)
 {
   YUVBUFFER &buf = m_buffers[index];
   YUVFIELDS &fields = buf.fields;
@@ -180,50 +226,46 @@ bool CRendererVTB::UploadTexture(int index)
   // with an IOSurface as there is no CPU -> GPU upload.
   CGLContextObj cgl_ctx  = (CGLContextObj)g_Windowing.GetCGLContextObj();
   IOSurfaceRef surface  = CVPixelBufferGetIOSurface(cvBufferRef);
-  OSType format_type = IOSurfaceGetPixelFormat(surface);
 
-  if (format_type != kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange)
-  {
-    return false;
-  }
-
+  
   GLsizei surfplanes = IOSurfaceGetPlaneCount(surface);
-
+  
   if (surfplanes != 2)
   {
     return false;
   }
-
+  
   GLsizei widthY = IOSurfaceGetWidthOfPlane(surface, 0);
   GLsizei widthUV = IOSurfaceGetWidthOfPlane(surface, 1);
   GLsizei heightY = IOSurfaceGetHeightOfPlane(surface, 0);
   GLsizei heightUV = IOSurfaceGetHeightOfPlane(surface, 1);
-
+  
   glBindTexture(m_textureTarget, planes[0].id);
-
+  
   CGLTexImageIOSurface2D(cgl_ctx, m_textureTarget, GL_LUMINANCE,
                          widthY, heightY, GL_LUMINANCE, GL_UNSIGNED_BYTE, surface, 0);
   glTexParameteri(m_textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(m_textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(m_textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(m_textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+  
   glBindTexture(m_textureTarget, planes[1].id);
-
+  
   CGLTexImageIOSurface2D(cgl_ctx, m_textureTarget, GL_LUMINANCE_ALPHA,
                          widthUV, heightUV, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, surface, 1);
   glTexParameteri(m_textureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(m_textureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(m_textureTarget, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
   glTexParameteri(m_textureTarget, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+  
   glBindTexture(m_textureTarget, 0);
   planes[0].flipindex = buf.flipindex;
-
+  
   glDisable(m_textureTarget);
-
+  
   CalculateTextureSourceRects(index, 3);
-
+  
+  
   return true;
 }
 
@@ -252,4 +294,73 @@ bool CRendererVTB::NeedBuffer(int idx)
 
   return false;
 }
+
+bool CRendererVTB::Upload422(int index)
+{
+  YUVBUFFER &buf    = m_buffers[index];
+  YUVFIELDS &fields = buf.fields;
+  CVTBData *vtbdata = (CVTBData*)m_buffers[index].hwDec;
+  
+  CVImageBufferRef cvBufferRef = vtbdata->m_vtbbuf;
+
+
+  glEnable(m_textureTarget);
+  
+  if (cvBufferRef && fields[m_currentField][0].flipindex != buf.flipindex)
+  {
+    
+    // It is the fastest way to render a CVPixelBuffer backed
+    // with an IOSurface as there is no CPU -> GPU upload.
+    CGLContextObj cgl_ctx  = (CGLContextObj)g_Windowing.GetCGLContextObj();
+    IOSurfaceRef	surface  = CVPixelBufferGetIOSurface(cvBufferRef);
+    GLsizei       texWidth = IOSurfaceGetWidth(surface);
+    GLsizei       texHeight= IOSurfaceGetHeight(surface);
+    OSType        format_type = IOSurfaceGetPixelFormat(surface);
+    
+    glBindTexture(m_textureTarget, fields[FIELD_FULL][0].id);
+    
+    if (format_type == kCVPixelFormatType_422YpCbCr8)
+      CGLTexImageIOSurface2D(cgl_ctx, m_textureTarget, GL_RGBA8,
+                             texWidth / 2, texHeight, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, surface, 0);
+    else if (format_type == kCVPixelFormatType_32BGRA)
+      CGLTexImageIOSurface2D(cgl_ctx, m_textureTarget, GL_RGBA8,
+                             texWidth, texHeight, GL_BGRA, GL_UNSIGNED_INT_8_8_8_8_REV, surface, 0);
+    
+    glBindTexture(m_textureTarget, 0);
+    fields[FIELD_FULL][0].flipindex = buf.flipindex;
+    
+  }
+  
+  
+  CalculateTextureSourceRects(index, 3);
+  glDisable(m_textureTarget);
+  
+  return true;
+}
+
+bool CRendererVTB::UploadTexture(int index)
+{
+  CVTBData *vtbdata = (CVTBData*)m_buffers[index].hwDec;
+  
+  CVImageBufferRef cvBufferRef = vtbdata->m_vtbbuf;
+  IOSurfaceRef surface  = CVPixelBufferGetIOSurface(cvBufferRef);
+
+
+  glEnable(m_textureTarget);
+  OSType format_type = IOSurfaceGetPixelFormat(surface);
+
+  if (format_type == kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange)
+  {
+    return Upload420(index);
+  }
+  else if (format_type == kCVPixelFormatType_422YpCbCr8)
+  {
+    return Upload422(index);
+  }
+  else
+  {
+    return false;
+  }
+}
+
 #endif
