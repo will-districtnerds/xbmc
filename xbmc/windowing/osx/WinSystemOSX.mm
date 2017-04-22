@@ -509,11 +509,11 @@ CGDisplayModeRef GetMode(int width, int height, double refreshrate, int screenId
   {
     CGDisplayModeRef displayMode = (CGDisplayModeRef)CFArrayGetValueAtIndex(displayModes, i);
     uint32_t flags = CGDisplayModeGetIOFlags(displayMode);
-    stretched = flags & kDisplayModeStretchedFlag;
-    interlaced = flags & kDisplayModeInterlacedFlag;
+    stretched = flags & kDisplayModeStretchedFlag ? true : false;
+    interlaced = flags & kDisplayModeInterlacedFlag ? true : false;
     bitsperpixel = DisplayBitsPerPixelForMode(displayMode);
-    safeForHardware = flags & kDisplayModeSafeFlag;
-    televisionoutput = flags & kDisplayModeTelevisionFlag;
+    safeForHardware = flags & kDisplayModeSafetyFlags ? true : false;
+    televisionoutput = flags & kDisplayModeTelevisionFlag ? true : false;
     w = CGDisplayModeGetWidth(displayMode);
     h = CGDisplayModeGetHeight(displayMode);
     rate = CGDisplayModeGetRefreshRate(displayMode);
@@ -1355,11 +1355,11 @@ void CWinSystemOSX::FillInVideoModes()
       CGDisplayModeRef displayMode = (CGDisplayModeRef)CFArrayGetValueAtIndex(displayModes, i);
 
       uint32_t flags = CGDisplayModeGetIOFlags(displayMode);
-      stretched = flags & kDisplayModeStretchedFlag;
-      interlaced = flags & kDisplayModeInterlacedFlag;
+      stretched = flags & kDisplayModeStretchedFlag ? true : false;
+      interlaced = flags & kDisplayModeInterlacedFlag ? true : false;
       bitsperpixel = DisplayBitsPerPixelForMode(displayMode);
-      safeForHardware = flags & kDisplayModeSafeFlag;
-      televisionoutput = flags & kDisplayModeTelevisionFlag;
+      safeForHardware = flags & kDisplayModeSafetyFlags ? true : false;
+      televisionoutput = flags & kDisplayModeTelevisionFlag ? true : false;
 
       if ((bitsperpixel == 32)      &&
           (safeForHardware == YES)  &&
