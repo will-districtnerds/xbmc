@@ -1288,11 +1288,22 @@ bool CWinSystemOSX::SwitchToVideoMode(int width, int height, double refreshrate,
   if( screenIdx >= GetNumScreens())
     return false;
 
-  boolean_t match = false;
+  bool match = false;
   CGDisplayModeRef dispMode = NULL;
   // Figure out the screen size. (default to main screen)
   CGDirectDisplayID display_id = GetDisplayID(screenIdx);
 
+  // are we in stereoscopic/3d mode?
+  RENDER_STEREO_MODE stereo_mode = g_graphicsContext.GetStereoMode();
+  if (stereo_mode == RENDER_STEREO_MODE_SPLIT_HORIZONTAL || stereo_mode ==RENDER_STEREO_MODE_SPLIT_VERTICAL)
+  {
+    CGError err = CGDisplaySetStereoOperation(display_id, true, false, kCGConfigureForAppOnly);
+  }
+  else
+  {
+    CGError err = CGDisplaySetStereoOperation(display_id, false, false, kCGConfigureForAppOnly);
+  }
+  
   // find mode that matches the desired size, refreshrate
   // non interlaced, nonstretched, safe for hardware
   dispMode = GetMode(width, height, refreshrate, screenIdx);
