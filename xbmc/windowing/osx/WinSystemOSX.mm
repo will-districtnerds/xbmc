@@ -251,7 +251,7 @@ int DisplayBitsPerPixelForMode(CGDisplayModeRef mode)
 }
 
 // mimic former behavior of deprecated CGDisplayBestModeForParameters
-CGDisplayModeRef BestMatchForMode(CGDirectDisplayID display, size_t bitsPerPixel, size_t width, size_t height, boolean_t &match)
+CGDisplayModeRef BestMatchForMode(CGDirectDisplayID display, size_t bitsPerPixel, size_t width, size_t height, bool &match)
 {
   // Get a copy of the current display mode
   CGDisplayModeRef displayMode = CGDisplayCopyDisplayMode(kCGDirectMainDisplay);
@@ -270,7 +270,7 @@ CGDisplayModeRef BestMatchForMode(CGDirectDisplayID display, size_t bitsPerPixel
     
     if((CGDisplayModeGetWidth(mode) >= width) && (CGDisplayModeGetHeight(mode) >= height))
     {
-      CGDisplayModeRelease(displayMode); // rlease the copy we got before ...
+      CGDisplayModeRelease(displayMode); // release the copy we got before ...
       displayMode = mode;
       match = true;
       break;
