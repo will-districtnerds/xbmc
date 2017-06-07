@@ -72,12 +72,14 @@
 #include "settings/SettingUtils.h"
 #include "settings/SkinSettings.h"
 #include "settings/lib/SettingsManager.h"
+#include "settings/lib/SettingSection.h"
 #include "threads/SingleLock.h"
 #include "utils/CharsetConverter.h"
 #include "utils/log.h"
 #include "utils/RssManager.h"
 #include "utils/StringUtils.h"
 #include "utils/SystemInfo.h"
+#include "utils/UpdateHandler.h"
 #include "utils/Weather.h"
 #include "utils/XBMCTinyXML.h"
 #include "utils/SeekHandler.h"
@@ -636,6 +638,23 @@ void CSettings::InitializeVisibility()
     timezone->SetRequirementsMet(false);
   }
 #endif
+  // hide Updates category in system section if there is no UpdaterImpl
+  if (!CUpdateHandler::GetInstance().UpdateSupported())
+  {
+    const auto systemSection = GetSettingsManager()->GetSection("system");
+    if (systemSection)
+    {
+      SettingCategoryList categories = systemSection->GetCategories();
+      for (auto category : categories)
+      {
+        if (category->GetId() == "updates")
+        {
+          category->SetRequirementsMet(false);
+          break;
+        }
+      }
+    }
+  }
 }
 
 void CSettings::InitializeDefaults()
@@ -807,6 +826,7 @@ void CSettings::InitializeISettingsHandlers()
   GetSettingsManager()->RegisterSettingsHandler(&g_timezone);
 #endif
   GetSettingsManager()->RegisterSettingsHandler(&CMediaSettings::GetInstance());
+  GetSettingsManager()->RegisterSettingsHandler(&CUpdateHandler::GetInstance());
 }
 
 void CSettings::UninitializeISettingsHandlers()
@@ -834,6 +854,7 @@ void CSettings::UninitializeISettingsHandlers()
   GetSettingsManager()->UnregisterCallback(&XBMCHelper::GetInstance());
 #endif
   GetSettingsManager()->UnregisterCallback(&CWakeOnAccess::GetInstance());
+  GetSettingsManager()->UnregisterCallback(&CUpdateHandler::GetInstance());
 }
 
 void CSettings::InitializeISubSettings()
@@ -1005,6 +1026,11 @@ void CSettings::InitializeISettingCallbacks()
   settingSet.clear();
   settingSet.insert(CSettings::SETTING_MASTERLOCK_LOCKCODE);
   GetSettingsManager()->RegisterCallback(&g_passwordManager, settingSet);
+  
+  settingSet.clear();
+  settingSet.insert("updates.checkforupdates");
+  settingSet.insert("updates.enableautoupdate");
+  GetSettingsManager()->RegisterCallback(&CUpdateHandler::GetInstance(), settingSet);
 
   settingSet.clear();
   settingSet.insert(CSettings::SETTING_LOOKANDFEEL_RSSEDIT);
