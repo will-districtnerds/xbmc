@@ -7,4 +7,5 @@ VERSION_TAG ALPHA1
 VERSION_CODE 179701
 ADDON_API 17.9.701
 APP_PACKAGE org.xbmc.kodi
+SPARKLE_UPDATE_SCHEME_URL http://mirrors.kodi.tv/releases/sparkleupdate.xml
 

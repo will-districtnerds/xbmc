@@ -632,6 +632,7 @@ endfunction()
 #   APP_VERSION_TAG_LC - lowercased app version tag
 #   APP_VERSION - the app version (${APP_VERSION_MAJOR}.${APP_VERSION_MINOR}-${APP_VERSION_TAG})
 #   APP_ADDON_API - the addon API version in the form of 16.9.702
+#   APP_SPARKLE_UPDATE_SCHEME_URL - the url to the sparkle update information xml file used by the sparkle updater
 #   FILE_VERSION - file version in the form of 16,9,702,0 - Windows only
 #
 # Set various variables defined in "versions.h"
@@ -648,7 +649,7 @@ macro(core_find_versions)
   include(CMakeParseArguments)
   core_file_read_filtered(version_list ${CORE_SOURCE_DIR}/version.txt)
   string(REPLACE " " ";" version_list "${version_list}")
-  cmake_parse_arguments(APP "" "APP_NAME;COMPANY_NAME;WEBSITE;VERSION_MAJOR;VERSION_MINOR;VERSION_TAG;VERSION_CODE;ADDON_API;APP_PACKAGE" "" ${version_list})
+  cmake_parse_arguments(APP "" "APP_NAME;COMPANY_NAME;WEBSITE;VERSION_MAJOR;VERSION_MINOR;VERSION_TAG;VERSION_CODE;ADDON_API;APP_PACKAGE;SPARKLE_UPDATE_SCHEME_URL;" "" ${version_list})
 
   set(APP_NAME ${APP_APP_NAME}) # inconsistency but APP_APP_NAME looks weird
   string(TOLOWER ${APP_APP_NAME} APP_NAME_LC)

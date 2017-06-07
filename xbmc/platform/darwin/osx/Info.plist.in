@@ -24,7 +24,24 @@
 	<string>r####</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>sparkle_public_key_kodi.pem</string>
+	<key>SUFeedURL</key>
+	<string>@APP_SPARKLE_UPDATE_SCHEME_URL@</string>
 	<key>CFBundleSignature</key>
 	<string>@APP_NAME@</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>kodi.tv</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
