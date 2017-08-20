@@ -341,6 +341,9 @@ bool CApplication::OnEvent(XBMC_Event& newEvent)
       // Send a mouse motion event with no dx,dy for getting the current guiitem selected
       g_application.OnAction(CAction(ACTION_MOUSE_MOVE, 0, static_cast<float>(newEvent.focus.x), static_cast<float>(newEvent.focus.y), 0, 0));
       break;
+    case XBMC_TOGGLEFULLSCREEN:
+      g_application.ToggleFullscreen();
+      break;
     default:
       return CServiceBroker::GetInputManager().OnEvent(newEvent);
   }
@@ -1025,6 +1028,12 @@ void CApplication::CreateUserDirs() const
       CLog::Log(LOGWARNING, "Failed to remove the archive cache at %s", archiveCachePath.c_str());
   CDirectory::Create(archiveCachePath);
 
+}
+
+void CApplication::ToggleFullscreen() const
+{
+  g_graphicsContext.ToggleFullScreen();
+  m_pPlayer->TriggerUpdateResolution();
 }
 
 bool CApplication::Initialize()
@@ -1948,8 +1957,7 @@ bool CApplication::OnAction(const CAction &action)
 
   if (action.GetID() == ACTION_TOGGLE_FULLSCREEN)
   {
-    g_graphicsContext.ToggleFullScreen();
-    m_pPlayer->TriggerUpdateResolution();
+    ToggleFullscreen();
     return true;
   }
 
@@ -2438,8 +2446,7 @@ void CApplication::OnApplicationMessage(ThreadMessage* pMsg)
     break;
 
   case TMSG_TOGGLEFULLSCREEN:
-    g_graphicsContext.ToggleFullScreen();
-    m_pPlayer->TriggerUpdateResolution();
+      ToggleFullscreen();
     break;
 
   case TMSG_MINIMIZE:
