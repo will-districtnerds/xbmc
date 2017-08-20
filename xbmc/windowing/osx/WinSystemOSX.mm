@@ -452,9 +452,6 @@ void CWinSystemOSX::HandleNativeMousePosition()
   }
 }
 
-  return true;
-}
-
 // this is either called from SetFullScreen (so internally) or
 bool CWinSystemOSX::ResizeWindow(int newWidth, int newHeight, int newLeft, int newTop)
 {
