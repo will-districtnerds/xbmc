@@ -40,6 +40,7 @@
 #include "pvr/PVRManager.h"
 #include "settings/Settings.h"
 #include "utils/FileExtensionProvider.h"
+#include "utils/UpdateHandler.h"
 
 using namespace KODI;
 
@@ -159,6 +160,9 @@ bool CServiceManager::InitStageThree()
 
   m_contextMenuManager->Init();
   m_PVRManager->Init();
+  CUpdateHandler::GetInstance().Init();
+  
+  
 
   init_level = 3;
   return true;
@@ -172,6 +176,7 @@ void CServiceManager::DeinitStageThree()
   m_contextMenuManager->Deinit();
   m_gameServices.reset();
   m_peripherals->Clear();
+  CUpdateHandler::GetInstance().Deinit();
 }
 
 void CServiceManager::DeinitStageTwo()
